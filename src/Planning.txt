@@ -1,6 +1,39 @@
 Planning phase ideas:
 
+
+
 Number Allocation Problem:
+
+- Can't use the same number twice
+
+BINS:
+    #1 - numbers multiplied
+    #2 - numbers summed
+    #3 - smallest subtracted from largest
+    #4 - these numbers are ignored
+
+    FRAMEWORK: To start with at least
+
+        - Population Size: 20
+            - Fitness Function
+                - Calculate score as provided
+            - Selection Rule:
+            - Crossover:
+            - Mutation Frequency:
+            - Anytime Performance:
 
 Tower Building Problem:
 
+
+- Can't use the same tower piece twice
+
+        FRAMEWORK:
+
+            - Population Size:
+                - Fitness Function
+                    -
+                    -
+                - Selection Rule:
+                - Crossover:
+                - Mutation Frequency:
+                - Anytime Performance:
