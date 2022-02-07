@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ParseInput {
-
-    public ParseInput(int puzzleNum, String puzzleFile, ArrayList arrayList) {
+    private ArrayList arrayList;
+    public ParseInput(int puzzleNum, String puzzleFile) {
         switch(puzzleNum){
             case 1:
                 arrayList = ParsePuzzleOne(puzzleFile);
@@ -13,18 +13,21 @@ public class ParseInput {
             case 2:
                 arrayList = ParsePuzzleTwo(puzzleFile);
                 break;
+            default:
+                arrayList = new ArrayList();
+                break;
         }
     }
 
-    public ArrayList<Integer> ParsePuzzleOne(String puzzleFile){
-        ArrayList<Integer> intList = new ArrayList<Integer>();
+    private ArrayList<Float> ParsePuzzleOne(String puzzleFile){
+        ArrayList<Float> intList = new ArrayList<>();
         try {
             File myObj = new File(puzzleFile);
             Scanner myReader = new Scanner(myObj);
             while(myReader.hasNextLine()){
                 String data = myReader.nextLine();
                 try{
-                    int currValue = Integer.parseInt(data);
+                    float currValue = Float.parseFloat(data);
                     intList.add(currValue);
                 }
                 catch (NumberFormatException e){
@@ -39,8 +42,8 @@ public class ParseInput {
         return intList;
     }
 
-    public ArrayList<Piece> ParsePuzzleTwo(String puzzleFile){
-        ArrayList<Piece> pieceList = new ArrayList<Piece>();
+    private ArrayList<Piece> ParsePuzzleTwo(String puzzleFile){
+        ArrayList<Piece> pieceList = new ArrayList<>();
         try {
             File myObj = new File(puzzleFile);
             Scanner myReader = new Scanner(myObj);
@@ -50,15 +53,8 @@ public class ParseInput {
                 int width = Integer.parseInt(spaces[1]);
                 int strength = Integer.parseInt(spaces[2]);
                 int cost = Integer.parseInt(spaces[3]);
-                if(spaces[0] == "Door"){
-                    pieceList.add(new Piece(1,width, strength, cost));
-                }
-                if(spaces[0] == "Wall"){
-                    pieceList.add(new Piece(2,width, strength, cost));
-                }
-                if(spaces[0] == "Lookout"){
-                    pieceList.add(new Piece(3,width, strength, cost));
-                }
+                pieceList.add(new Piece(spaces[0],width, strength, cost));
+
             }
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
@@ -66,5 +62,9 @@ public class ParseInput {
         }
         System.out.println("Input Read!");
         return pieceList;
+    }
+
+    public ArrayList getArrayList() {
+        return arrayList;
     }
 }

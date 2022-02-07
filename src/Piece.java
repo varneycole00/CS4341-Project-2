@@ -11,15 +11,15 @@ public class Piece {
     int Strength;
     int Cost;
 
-    public Piece(int Numtype, int width, int strength, int cost) {
+    public Piece(String Numtype, int width, int strength, int cost) {
         switch(Numtype){
-            case 1:
+            case "Door":
                 type = Type.DOOR;
                 break;
-            case 2:
+            case "Wall":
                 type = Type.WALL;
                 break;
-            case 3:
+            case "Lookout":
                 type = Type.LOOKOUT;
                 break;
         }
@@ -58,5 +58,10 @@ public class Piece {
 
     public void setCost(int cost) {
         Cost = cost;
+    }
+
+    @Override
+    public String toString() {
+        return "Piece{"+type.name() +" "+Width+" "+Strength+" "+Cost+"}";
     }
 }

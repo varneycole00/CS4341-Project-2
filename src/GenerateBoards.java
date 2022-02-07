@@ -33,7 +33,7 @@ public class GenerateBoards {
         FileWriter board = new FileWriter("src/boards/number_allocation.txt"); //Starts the file writer for a new text file
         float random;
         for(int i = 0; i<40; i++){
-            random = -10 + r.nextFloat() * 20;
+            random = -10 + r.nextFloat() * 20; //Random float with range [-10, 10]
             board.write(Float.toString(random));
             if(i!=39) board.write("\n");
         }
