@@ -1,5 +1,8 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class main {
@@ -11,7 +14,7 @@ public class main {
         int currPuzzle = 0;
 
         //checks if the input is correct and specifies what needs to be changed
-        if(args.length < 3 || args.length > 3){
+        if(args.length != 3){
             System.out.println("An error occurred.");
             System.out.println("Invalid number of input. ");
             System.out.println("Please input a puzzle number, filename, and a time-limit to solve the puzzle ");
@@ -23,27 +26,32 @@ public class main {
             currPuzzle = Integer.parseInt(initialInt);
         }
         catch (NumberFormatException e){
-            System.out.println("Please input the filename as the first input.");
+            System.out.println("Please input the puzzle number as the first input.");
             return;
         }
+        if(!(currPuzzle == 1) || !(currPuzzle == 2)){
+            System.out.println("Please input a correct puzzle number, either 1 or 2");
+        }
 
-//        //reads the second input as the filename and opens the file
-//        String Filename = args[1];
-//        try {
-//            File myObj = new File("C:\\Users\\Josh\\IdeaProjects\\Intro to AI\\src\\" + Filename);
-//            Scanner myReader = new Scanner(myObj);
-//            int i = 0;
-//            //while the file is open, we parse through it to calculate the board size
-//            while (myReader.hasNextLine()) {
-//                //parse values
-//            }
-//            myReader.close();
-//        } catch (FileNotFoundException e) {
-//            System.out.println("An error occurred.");
-//            e.printStackTrace();
-//        }
-
-
+        GenerateBoards currBoard;
+        String puzzleFile = "";
+        try {
+             currBoard = new GenerateBoards(currPuzzle);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        switch(currPuzzle){
+            case 1:
+                puzzleFile = "src/boards/number_allocation.txt";
+                ArrayList<Integer> puzzleNums = new ArrayList<Integer>();
+                ParseInput parseOne = new ParseInput(currPuzzle, puzzleFile, puzzleNums);
+                break;
+            case 2:
+                puzzleFile = "src/boards/tower_building.txt";
+                ArrayList<Piece> puzzlePieces = new ArrayList<Piece>();
+                ParseInput parseTwo = new ParseInput(currPuzzle, puzzleFile, puzzlePieces);
+                break;
+        }
 
         long startTime = System.nanoTime();
         //actual alg goes here

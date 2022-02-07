@@ -53,7 +53,7 @@ public class GenerateBoards {
                     board.write("Wall\t");
                     break;
                 case 2:
-                    board.write("Tower\t");
+                    board.write("Lookout\t");
                     break;
                 default:
                     break;
