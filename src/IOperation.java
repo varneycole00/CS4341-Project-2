@@ -13,6 +13,9 @@ public class IOperation {
         while(getTime()<time) nextGeneration();
     }
 
+    /**
+     * Creates the next generation of puzzles
+     */
     public void nextGeneration(){
         Puzzle[] next = population.clone();
         culling(next);
@@ -21,8 +24,15 @@ public class IOperation {
         mutation(next, parent1, parent2);
 
         population = next;
+        generation++;
     }
 
+    /**
+     * Replaces previous generation of puzzles with new ones, except for the elites
+     * @param next Array of puzzles
+     * @param puzzle1 parent 1
+     * @param puzzle2 parent 2
+     */
     public void mutation(Puzzle[] next, Puzzle puzzle1, Puzzle puzzle2){
     }
 
