@@ -6,10 +6,10 @@ enum Type {
 
 public class Piece {
 
-    Type type;
-    int Width;
-    int Strength;
-    int Cost;
+    private Type type;
+    private int Width;
+    private int Strength;
+    private int Cost;
 
     public Piece(String Numtype, int width, int strength, int cost) {
         switch(Numtype){
