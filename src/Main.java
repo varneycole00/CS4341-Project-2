@@ -38,7 +38,7 @@ public class Main {
         String puzzleFile = args[1];
         int time = Integer.parseInt(args[2]);
         try {
-            currBoard = new GenerateBoards(currPuzzle);
+            currBoard = new GenerateBoards(currPuzzle, 12345); //TODO for quick testing but change before submission
         } catch (IOException e) {
             e.printStackTrace();
         }
