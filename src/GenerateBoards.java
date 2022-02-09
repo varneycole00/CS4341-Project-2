@@ -51,6 +51,7 @@ public class GenerateBoards {
         board.close();
     }
 
+
     private void towerBuilding() throws IOException {
         FileWriter board = new FileWriter("src/boards/tower_building.txt"); //Starts the file writer for a new text file
         int random;
