@@ -47,13 +47,13 @@ public class Main {
                 puzzleFile = "src/boards/number_allocation.txt"; //TODO for quick testing but change before submission
                 ParseInput parseOne = new ParseInput(currPuzzle, puzzleFile);
                 new NumberAllocationOperation((ArrayList<Float>) parseOne.getArrayList(), 10, time);
-                System.out.println(parseOne.getArrayList());
+                //System.out.println(parseOne.getArrayList());
                 break;
             case 2:
                 puzzleFile = "src/boards/tower_building.txt"; //TODO for quick testing but change before submission
                 ParseInput parseTwo = new ParseInput(currPuzzle, puzzleFile);
                 new TowerBuildingOperation((ArrayList<Piece>) parseTwo.getArrayList(), 10, time);
-                System.out.println(parseTwo.getArrayList());
+                //System.out.println(parseTwo.getArrayList());
                 break;
         }
     }

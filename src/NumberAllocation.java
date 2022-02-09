@@ -3,10 +3,10 @@ import java.util.Arrays;
 
 public class NumberAllocation extends Puzzle implements Cloneable {
     private final ArrayList<Float> allNum;
-    private ArrayList<Float> bin1;
-    private ArrayList<Float> bin2;
-    private ArrayList<Float> bin3;
-    private ArrayList<Float> bin4;
+    private ArrayList<Float> bin1 = new ArrayList<>();
+    private ArrayList<Float> bin2 = new ArrayList<>();
+    private ArrayList<Float> bin3 = new ArrayList<>();
+    private ArrayList<Float> bin4 = new ArrayList<>();
 
     public NumberAllocation(ArrayList<Float> arrayList) {
         super();
