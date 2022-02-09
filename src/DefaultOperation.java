@@ -1,12 +1,12 @@
 import java.util.Arrays;
 import java.util.Random;
 
-public class IOperation {
+public class DefaultOperation {
     private final long startTime;
     private Puzzle[] population;
     private int generation;
 
-    public IOperation(int size, long time) {
+    public DefaultOperation(int size, long time) {
         startTime = System.currentTimeMillis();
         population = new Puzzle[size];
         generation = 0;
