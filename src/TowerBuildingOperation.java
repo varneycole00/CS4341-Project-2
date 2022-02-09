@@ -11,6 +11,6 @@ public class TowerBuildingOperation extends DefaultOperation {
     public Puzzle mutation(Puzzle puzzle1, Puzzle puzzle2) {
         TowerBuilding nA1 = (TowerBuilding) puzzle1;
         TowerBuilding nA2 = (TowerBuilding) puzzle2;
-        return null;
+        return nA1;
     }
 }

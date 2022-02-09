@@ -14,6 +14,6 @@ public class NumberAllocationOperation extends DefaultOperation {
     public Puzzle mutation(Puzzle puzzle1, Puzzle puzzle2) {
         NumberAllocation nA1 = (NumberAllocation) puzzle1;
         NumberAllocation nA2 = (NumberAllocation) puzzle2;
-        return null;
+        return nA1;
     }
 }
