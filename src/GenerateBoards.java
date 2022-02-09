@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class GenerateBoards {
@@ -34,10 +35,18 @@ public class GenerateBoards {
     private void numberAllocation() throws IOException {
         FileWriter board = new FileWriter("src/boards/number_allocation.txt"); //Starts the file writer for a new text file
         float random;
+        ArrayList<Float> boardNums = new ArrayList<>();
         for (int i = 0; i < 40; i++) {
             random = -10 + r.nextFloat() * 20; //Random float with range [-10, 10]
-            board.write(Float.toString(random));
-            if (i != 39) board.write("\n");
+            if (boardNums.contains(random)) {
+                i--;
+            } else {
+                boardNums.add(random);
+            }
+        }
+        for (int j = 0; j < boardNums.size(); j++) {
+            board.write(Float.toString(boardNums.get(j)));
+            if (j != 39) board.write("\n");
         }
         board.close();
     }
