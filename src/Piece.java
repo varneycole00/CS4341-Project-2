@@ -1,26 +1,22 @@
-enum Type {
-    DOOR,
-    WALL,
-    LOOKOUT
-}
+
 
 public class Piece {
 
-    private Type type;
+    private PieceType type;
     private int Width;
     private int Strength;
     private int Cost;
 
     public Piece(String Numtype, int width, int strength, int cost) {
-        switch(Numtype){
+        switch (Numtype) {
             case "Door":
-                type = Type.DOOR;
+                type = PieceType.DOOR;
                 break;
             case "Wall":
-                type = Type.WALL;
+                type = PieceType.WALL;
                 break;
             case "Lookout":
-                type = Type.LOOKOUT;
+                type = PieceType.LOOKOUT;
                 break;
         }
         Width = width;
@@ -40,11 +36,11 @@ public class Piece {
         return Width;
     }
 
-    public Type getType() {
+    public PieceType getType() {
         return type;
     }
 
-    public void setType(Type type) {
+    public void setType(PieceType type) {
         this.type = type;
     }
 
@@ -62,6 +58,6 @@ public class Piece {
 
     @Override
     public String toString() {
-        return "Piece{"+type.name() +" "+Width+" "+Strength+" "+Cost+"}";
+        return "Piece{" + type.name() + " " + Width + " " + Strength + " " + Cost + "}";
     }
 }

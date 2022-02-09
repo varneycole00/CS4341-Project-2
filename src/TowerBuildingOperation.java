@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class TowerBuildingOperation extends IOperation {
-    public TowerBuildingOperation(ArrayList<Piece> pieces, int population, int time){
+    public TowerBuildingOperation(ArrayList<Piece> pieces, int population, int time) {
         super(population, time);
         TowerBuilding[] puzzles = new TowerBuilding[population];
         super.setPopulation(puzzles);

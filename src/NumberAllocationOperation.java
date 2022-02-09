@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
-public class NumberAllocationOperation extends IOperation{
-    public NumberAllocationOperation(ArrayList<Float> nums, int population, int time){
+public class NumberAllocationOperation extends IOperation {
+    public NumberAllocationOperation(ArrayList<Float> nums, int population, int time) {
         super(population, time);
         NumberAllocation[] puzzles = new NumberAllocation[population];
         super.setPopulation(puzzles);
