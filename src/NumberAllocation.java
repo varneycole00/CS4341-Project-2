@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class NumberAllocation extends Puzzle implements Cloneable {
     private final ArrayList<Float> allNum;
@@ -13,18 +12,33 @@ public class NumberAllocation extends Puzzle implements Cloneable {
         allNum = arrayList;
     }
 
-    @Override
-    public float getScore() {
-        float firstBin = 1, secondBin = 0, thirdBin;
+    public float bin1Score(){
+        float firstBin = 1;
         for (float f : bin1) //First bin is product
             firstBin *= f;
+        return firstBin;
+    }
+    
+    public float bin2Score(){
+        float secondBin = 0;
         for (float f : bin2) //Second bin is sum
             secondBin += f;
+        return secondBin;
+    }
+    
+    public float bin3Score(){
+        ArrayList<Float> clone = (ArrayList<Float>) bin3.clone();
+        clone.sort(Float::compareTo);
+        return clone.get(clone.size() - 1) - clone.get(0);//Third bin is max-min
+    }
 
-        bin3.sort(Float::compareTo);
-        thirdBin = bin3.get(bin3.size() - 1) - bin3.get(0);//Third bin is max-min
-
-        return firstBin + secondBin + thirdBin;
+    public float bin4Score(){
+        return 0;
+    }
+    
+    @Override
+    public float getScore() {
+        return bin1Score()+bin2Score()+bin3Score()+bin4Score();
     }
 
     public ArrayList<Float> getAllNum() {

@@ -47,7 +47,7 @@ public class DefaultOperation {
      * @param puzzle2 parent 2
      */
     public Puzzle mutation(Puzzle puzzle1, Puzzle puzzle2) {
-        return null;
+        return puzzle1;
     }
 
     public long getTime() {
