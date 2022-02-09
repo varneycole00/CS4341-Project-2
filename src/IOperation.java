@@ -16,12 +16,24 @@ public class IOperation {
      * Creates the next generation of puzzles
      */
     public void nextGeneration() {
-        Puzzle[] next = population.clone();
-        culling(next);
-        Puzzle parent1 = chooseParent(next);
-        Puzzle parent2 = chooseParent(next);
-        mutation(next, parent1, parent2);
+        Puzzle parent1, parent2;
+        Puzzle[] next = new Puzzle[population.length];
+        Arrays.sort(population);
+        culling(population);
+        for(int i = 0; i < next.length*2/10;i++ ){
+            next[i] = population[population.length-i-1];
+        }
+        for(int i =next.length*2/10; i<next.length; i+=2){
+            parent1 = chooseParent(population);
+            do{
+                parent2 = chooseParent(population);
+            } while(parent1==parent2);
 
+            next[i]=mutation(parent1, parent2);
+            if(i+1<next.length)
+                next[i+1]=mutation(parent2, parent1);
+
+        }
         population = next;
         generation++;
     }
@@ -29,11 +41,11 @@ public class IOperation {
     /**
      * Replaces previous generation of puzzles with new ones, except for the elites
      *
-     * @param next    Array of puzzles
      * @param puzzle1 parent 1
      * @param puzzle2 parent 2
      */
-    public void mutation(Puzzle[] next, Puzzle puzzle1, Puzzle puzzle2) {
+    public Puzzle mutation(Puzzle puzzle1, Puzzle puzzle2) {
+        return null;
     }
 
     public long getTime() {
@@ -71,7 +83,6 @@ public class IOperation {
      * @param next Array of puzzles with the first 30% turned to null
      */
     private void culling(Puzzle[] next) {
-        Arrays.sort(next);
         for (int i = 0; i < next.length * 3 / 10; i++) {
             next[i] = null;
         }
