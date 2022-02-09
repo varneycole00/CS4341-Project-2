@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class NumberAllocation extends Puzzle implements Cloneable {
     private final ArrayList<Float> allNum;
