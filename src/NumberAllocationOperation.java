@@ -5,6 +5,9 @@ public class NumberAllocationOperation extends IOperation {
         super(population, time);
         NumberAllocation[] puzzles = new NumberAllocation[population];
         super.setPopulation(puzzles);
+
+        while (getTime() < time) nextGeneration();
+
     }
 
     @Override //TODO implement swapping and merging values of parents

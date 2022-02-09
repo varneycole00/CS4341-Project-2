@@ -10,8 +10,6 @@ public class IOperation {
         startTime = System.currentTimeMillis();
         population = new Puzzle[size];
         generation = 0;
-
-        while (getTime() < time) nextGeneration();
     }
 
     /**
@@ -48,7 +46,7 @@ public class IOperation {
      * @param next array of puzzles
      * @return one of the puzzles
      */
-    private Puzzle chooseParent(Puzzle[] next) {
+    private Puzzle chooseParent(Puzzle[] next) { //TODO duplication prevention
         /* Check Assignment 2 video on the spreadsheet for implementation method*/
         double random = new Random().nextDouble();
         double cumulative = 0;

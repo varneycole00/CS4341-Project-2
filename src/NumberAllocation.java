@@ -26,4 +26,40 @@ public class NumberAllocation extends Puzzle implements Cloneable {
 
         return firstBin + secondBin + thirdBin;
     }
+
+    public ArrayList<Float> getAllNum() {
+        return allNum;
+    }
+
+    public ArrayList<Float> getBin1() {
+        return bin1;
+    }
+
+    public void setBin1(ArrayList<Float> bin1) {
+        this.bin1 = bin1;
+    }
+
+    public ArrayList<Float> getBin2() {
+        return bin2;
+    }
+
+    public void setBin2(ArrayList<Float> bin2) {
+        this.bin2 = bin2;
+    }
+
+    public ArrayList<Float> getBin3() {
+        return bin3;
+    }
+
+    public void setBin3(ArrayList<Float> bin3) {
+        this.bin3 = bin3;
+    }
+
+    public ArrayList<Float> getBin4() {
+        return bin4;
+    }
+
+    public void setBin4(ArrayList<Float> bin4) {
+        this.bin4 = bin4;
+    }
 }
