@@ -20,18 +20,20 @@ public class IOperation {
         Puzzle[] next = new Puzzle[population.length];
         Arrays.sort(population);
         culling(population);
-        for(int i = 0; i < next.length*2/10;i++ ){
-            next[i] = population[population.length-i-1];
-        }
-        for(int i =next.length*2/10; i<next.length; i+=2){
-            parent1 = chooseParent(population);
-            do{
-                parent2 = chooseParent(population);
-            } while(parent1==parent2);
 
-            next[i]=mutation(parent1, parent2);
-            if(i+1<next.length)
-                next[i+1]=mutation(parent2, parent1);
+        for (int i = 0; i < next.length * 2 / 10; i++) { //Gets the best from previous generation. Elitism
+            next[i] = population[population.length - i - 1];
+        }
+
+        for (int i = next.length * 2 / 10; i < next.length; i += 2) {
+            parent1 = chooseParent(population);
+            do {
+                parent2 = chooseParent(population);
+            } while (parent1 == parent2);
+
+            next[i] = mutation(parent1, parent2);
+            if (i + 1 < next.length)
+                next[i + 1] = mutation(parent2, parent1);
 
         }
         population = next;
