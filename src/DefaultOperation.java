@@ -30,11 +30,11 @@ public class DefaultOperation {
             do {
                 parent2 = chooseParent(population);
             } while (parent1 == parent2);
-
-            next[i] = mutation(parent1, parent2);
+            System.out.println("Parent chosen");
+            Puzzle[] children = mutation(parent1, parent2);
+            next[i] = children[0];
             if (i + 1 < next.length)
-                next[i + 1] = mutation(parent2, parent1);
-
+                next[i + 1] = children[1];
         }
         population = next;
         generation++;
@@ -46,8 +46,9 @@ public class DefaultOperation {
      * @param puzzle1 parent 1
      * @param puzzle2 parent 2
      */
-    public Puzzle mutation(Puzzle puzzle1, Puzzle puzzle2) {
-        return puzzle1;
+    public Puzzle[] mutation(Puzzle puzzle1, Puzzle puzzle2) {
+        Puzzle[] mutationReturn = {puzzle2, puzzle2};
+        return mutationReturn;
     }
 
     public long getTime() {

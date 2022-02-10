@@ -8,9 +8,11 @@ public class TowerBuildingOperation extends DefaultOperation {
     }
 
     @Override //TODO implement swapping values of parents
-    public Puzzle mutation(Puzzle puzzle1, Puzzle puzzle2) {
+    public Puzzle[] mutation(Puzzle puzzle1, Puzzle puzzle2) {
         TowerBuilding nA1 = (TowerBuilding) puzzle1;
         TowerBuilding nA2 = (TowerBuilding) puzzle2;
-        return nA1;
+
+        Puzzle[] mutationReturn = {puzzle1, puzzle2};
+        return mutationReturn;
     }
 }

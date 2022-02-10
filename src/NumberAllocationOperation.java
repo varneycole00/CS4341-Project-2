@@ -70,7 +70,7 @@ public class NumberAllocationOperation extends DefaultOperation {
     }
 
     @Override //TODO implement swapping and merging values of parents
-    public Puzzle mutation(Puzzle puzzle1, Puzzle puzzle2) {
+    public Puzzle[] mutation(Puzzle puzzle1, Puzzle puzzle2) {
         NumberAllocation nA1 = (NumberAllocation) puzzle1;
         NumberAllocation nA2 = (NumberAllocation) puzzle2;
         NumberAllocation Child1 = new NumberAllocation(((NumberAllocation) puzzle1).getAllNum());
@@ -132,8 +132,9 @@ public class NumberAllocationOperation extends DefaultOperation {
         hasAllNumbers(Child1);
         hasAllNumbers(Child2);
 
-        // what to return?
-        return nA1;
+        // add to the current population array
+        Puzzle[] mutationReturn = {Child1, Child2};
+        return mutationReturn;
     }
 
     /**
