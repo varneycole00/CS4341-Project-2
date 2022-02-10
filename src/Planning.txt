@@ -17,7 +17,7 @@ BINS:
         - Population Size: 20
             - Fitness Function
                 - Calculate score as provided
-            - Selection Rule:
+            - Selection Rule: Maybe the top best scoring of a certain number
             - Crossover:
             - Mutation Frequency:
             - Anytime Performance:
@@ -31,9 +31,8 @@ Tower Building Problem:
 
             - Population Size:
                 - Fitness Function
-                    -
-                    -
-                - Selection Rule:
+                    - Calculate score as provided
+                - Selection Rule: Maybe the top best scoring of a certain number
                 - Crossover:
                 - Mutation Frequency:
                 - Anytime Performance:
