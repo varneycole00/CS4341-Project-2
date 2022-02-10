@@ -67,6 +67,59 @@ public class NumberAllocationOperation extends DefaultOperation {
     public Puzzle mutation(Puzzle puzzle1, Puzzle puzzle2) {
         NumberAllocation nA1 = (NumberAllocation) puzzle1;
         NumberAllocation nA2 = (NumberAllocation) puzzle2;
+        NumberAllocation Child1 = new NumberAllocation(((NumberAllocation) puzzle1).getAllNum());
+        NumberAllocation Child2 = new NumberAllocation(((NumberAllocation) puzzle2).getAllNum());
+
+        // bin1 swap
+        ArrayList<Float> Child1Bin1 = new ArrayList<>();
+        ArrayList<Float> Child2Bin1 = new ArrayList<>();
+        ArrayList<Float> Child1Bin2 = new ArrayList<>();
+        ArrayList<Float> Child2Bin2 = new ArrayList<>();
+        ArrayList<Float> Child1Bin3 = new ArrayList<>();
+        ArrayList<Float> Child2Bin3 = new ArrayList<>();
+        ArrayList<Float> Child1Bin4 = new ArrayList<>();
+        ArrayList<Float> Child2Bin4 = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            if (i < 5) {
+                Child1Bin1.add(nA1.getBin1().get(i));
+                Child2Bin1.add(nA2.getBin1().get(i));
+
+                Child1Bin2.add(nA1.getBin2().get(i));
+                Child2Bin2.add(nA2.getBin2().get(i));
+
+                Child1Bin3.add(nA1.getBin3().get(i));
+                Child2Bin3.add(nA2.getBin3().get(i));
+
+                Child1Bin4.add(nA1.getBin4().get(i));
+                Child2Bin4.add(nA2.getBin4().get(i));
+            } else {
+                Child1Bin1.add(nA2.getBin1().get(i));
+                Child2Bin1.add(nA1.getBin1().get(i));
+
+                Child1Bin2.add(nA2.getBin2().get(i));
+                Child2Bin2.add(nA1.getBin2().get(i));
+
+                Child1Bin3.add(nA2.getBin3().get(i));
+                Child2Bin3.add(nA1.getBin3().get(i));
+
+                Child1Bin4.add(nA2.getBin4().get(i));
+                Child2Bin4.add(nA1.getBin4().get(i));
+            }
+        }
+        Child1.setBin1(Child1Bin1);
+        Child2.setBin1(Child2Bin1);
+
+        Child1.setBin2(Child1Bin2);
+        Child2.setBin2(Child2Bin2);
+
+        Child1.setBin3(Child1Bin3);
+        Child2.setBin3(Child2Bin3);
+
+        Child1.setBin4(Child1Bin4);
+        Child2.setBin4(Child2Bin4);
+
+
+        // what to return?
         return nA1;
     }
 }
