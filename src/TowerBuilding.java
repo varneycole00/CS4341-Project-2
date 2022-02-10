@@ -32,4 +32,6 @@ public class TowerBuilding extends Puzzle implements Cloneable {
         return 10 + tower.size() - cost; //Given from assignment
 
     }
+
+
 }

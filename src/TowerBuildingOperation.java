@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class TowerBuildingOperation extends DefaultOperation {
     public TowerBuildingOperation(ArrayList<Piece> pieces, int population, int time) {
-        super(population, time);
+        super(population);
         TowerBuilding[] puzzles = new TowerBuilding[population];
         super.setPopulation(puzzles);
     }

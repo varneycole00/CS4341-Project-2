@@ -6,7 +6,7 @@ public class DefaultOperation {
     private Puzzle[] population;
     private int generation;
 
-    public DefaultOperation(int size, long time) {
+    public DefaultOperation(int size) {
         startTime = System.currentTimeMillis();
         population = new Puzzle[size];
         generation = 0;
@@ -16,6 +16,7 @@ public class DefaultOperation {
      * Creates the next generation of puzzles
      */
     public void nextGeneration() {
+        System.out.println(generation);
         Puzzle parent1, parent2;
         Puzzle[] next = new Puzzle[population.length];
         Arrays.sort(population);
@@ -27,11 +28,10 @@ public class DefaultOperation {
 
         for (int i = next.length * 2 / 10; i < next.length; i += 2) {
             parent1 = chooseParent(population);
-            do {
-                parent2 = chooseParent(population);
-            } while (parent1 == parent2);
-            System.out.println("Parent chosen");
+            parent2 = chooseParent(population);
+            System.out.println("Parents Chosen");
             Puzzle[] children = mutation(parent1, parent2);
+            System.out.println("Mutation Complete");
             next[i] = children[0];
             if (i + 1 < next.length)
                 next[i + 1] = children[1];
@@ -66,15 +66,23 @@ public class DefaultOperation {
         double random = new Random().nextDouble();
         double cumulative = 0;
         double total = 0;
+        double lowestScore = Double.MAX_VALUE;
         for (Puzzle p : next) {
-            if (p != null)
-                total += p.getScore();
+            if (p != null) {
+                if (lowestScore == Double.MAX_VALUE)
+                    lowestScore = p.getScore();
+                total += p.getScore() + lowestScore + 1;
+            }
         }
         for (Puzzle p : next) {
             if (p != null) {
-                cumulative += p.getScore() / total;
-                if (random < cumulative)
-                    return p;
+                cumulative += (p.getScore() + lowestScore + 1) / total;
+                if (random < cumulative) {
+                    Puzzle parent = p;
+                    p = null;
+                    return parent;
+                }
+
             }
         }
         return null;

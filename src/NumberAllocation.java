@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class NumberAllocation extends Puzzle implements Cloneable {
     private final ArrayList<Float> allNum;
@@ -75,5 +76,18 @@ public class NumberAllocation extends Puzzle implements Cloneable {
 
     public void setBin4(ArrayList<Float> bin4) {
         this.bin4 = bin4;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NumberAllocation that = (NumberAllocation) o;
+        return Objects.equals(allNum, that.allNum) && Objects.equals(bin1, that.bin1) && Objects.equals(bin2, that.bin2) && Objects.equals(bin3, that.bin3) && Objects.equals(bin4, that.bin4);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(allNum, bin1, bin2, bin3, bin4);
     }
 }

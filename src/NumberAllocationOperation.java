@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
 
 
 public class NumberAllocationOperation extends DefaultOperation {
@@ -9,15 +8,19 @@ public class NumberAllocationOperation extends DefaultOperation {
 
 
     public NumberAllocationOperation(ArrayList<Float> nums, int population, int time) {
-        super(population, time);
+        super(population);
         NumberAllocation[] puzzles = new NumberAllocation[population];
         this.numbers = nums;
         // create the first generation
         generateFirstGeneration(nums, puzzles);
-
         super.setPopulation(puzzles);
 
         while (getTime() < time) nextGeneration();
+        for(int i = 0; i<super.getPopulation().length; i++) {
+            Puzzle p = super.getPopulation()[i];
+            if (p != null)
+                System.out.print(p.getScore() +" "+i+ " \t");
+        }
 
     }
 
@@ -68,6 +71,7 @@ public class NumberAllocationOperation extends DefaultOperation {
         }
         return returnBool;
     }
+
 
     @Override //TODO implement swapping and merging values of parents
     public Puzzle[] mutation(Puzzle puzzle1, Puzzle puzzle2) {
@@ -136,6 +140,10 @@ public class NumberAllocationOperation extends DefaultOperation {
         Puzzle[] mutationReturn = {Child1, Child2};
         return mutationReturn;
     }
+
+
+
+
 
     /**
      * Takes in two children after mutation and adjusts them to be legal, valid children that will allow the algorithm
@@ -264,11 +272,11 @@ public class NumberAllocationOperation extends DefaultOperation {
                     !child.getBin2().contains(num) &&
                     !child.getBin3().contains(num) &&
                     !child.getBin4().contains(num)) {
-                System.out.println(child.toString() + " doesn't contain all 40 numbers with size of: " + child.getAllNum().size());
+                //System.out.println(child.toString() + " doesn't contain all 40 numbers with size of: " + child.getAllNum().size());
             }
 
         }
-        System.out.println(child.toString() + " Contains all 40 numbers with size of: " + child.getAllNum().size());
+        //System.out.println(child.toString() + " Contains all 40 numbers with size of: " + child.getAllNum().size());
     }
 
 }
