@@ -65,7 +65,12 @@ public class DefaultOperation {
      * @return one of the puzzles
      */
     private Puzzle chooseParent(Puzzle[] next) {
-        double random = new Random().nextDouble(); //Random double from 0 to 1
+        double random = new Random(12345).nextDouble(); //Random double from 0 to 1
+                                                              // TODO remove seed from random
+
+        System.out.println("This is a random number: " + random);
+        System.exit(0);
+
         double cumulative = 0; //Cumulative percentage
         double total = 0; //Total score of population
         double lowestScore = Double.MAX_VALUE; //Used for scores in the negatives to properly work with weighted percentage
