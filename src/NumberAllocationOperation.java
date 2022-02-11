@@ -1,3 +1,4 @@
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -22,6 +23,9 @@ public class NumberAllocationOperation extends DefaultOperation {
                 System.out.print(p.getScore() +" "+i+ " \t");
         }
 
+        Puzzle[] finishedAlg = this.getPopulation();
+        NumberAllocation puzzle0 = (NumberAllocation) finishedAlg[0];
+        System.out.println(puzzle0.getScore());
     }
 
 
@@ -244,20 +248,28 @@ public class NumberAllocationOperation extends DefaultOperation {
     public boolean replaceInChild(NumberAllocation child, float replace, float replaceWith) {
         if (child.getBin1().contains(replace)) {
             child.getBin1().add(child.getBin1().indexOf(replace), replaceWith);
+            int replacementIndexBin1 = child.getBin1().indexOf(replace);
+            child.getBin1().remove(replacementIndexBin1);
 //            System.out.println("replaced " + replace + " with " + replaceWith + " in " + child.toString());
             return true;
         } else if (child.getBin2().contains(replace)) {
             child.getBin2().add(child.getBin2().indexOf(replace), replaceWith);
+            int replacementIndexBin2 = child.getBin2().indexOf(replace);
+            child.getBin2().remove(replacementIndexBin2);
 //            System.out.println("replaced " + replace + " with " + replaceWith + " in " + child.toString());
 
             return true;
         } else if (child.getBin3().contains(replace)) {
             child.getBin3().add(child.getBin3().indexOf(replace), replaceWith);
+            int replacementIndexBin3 = child.getBin3().indexOf(replace);
+            child.getBin3().remove(replacementIndexBin3);
 //            System.out.println("replaced " + replace + " with " + replaceWith + " in " + child.toString());
 
             return true;
         } else if (child.getBin4().contains(replace)) {
             child.getBin4().add(child.getBin4().indexOf(replace), replaceWith);
+            int replacementIndexBin4 = child.getBin4().indexOf(replace);
+            child.getBin4().remove(replacementIndexBin4);
 //            System.out.println("replaced " + replace + " with " + replaceWith + " in " + child.toString());
 
             return true;

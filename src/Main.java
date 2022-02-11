@@ -43,7 +43,6 @@ public class Main {
                 puzzleFile = "src/boards/number_allocation.txt"; //TODO for quick testing but change before submission
                 ParseInput parseOne = new ParseInput(currPuzzle, puzzleFile);
                 new NumberAllocationOperation((ArrayList<Float>) parseOne.getArrayList(), 10, time);
-                //System.out.println(parseOne.getArrayList());
                 break;
             case 2:
                 puzzleFile = "src/boards/tower_building.txt"; //TODO for quick testing but change before submission
