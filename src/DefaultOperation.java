@@ -16,29 +16,30 @@ public class DefaultOperation {
      * Creates the next generation of puzzles
      */
     public void nextGeneration() {
-        int PERCENTAGE = 20;
+        int PERCENTAGE = 20; //Percentage of current population to bring over
         System.out.println(generation);
-        Puzzle parent1, parent2;
-        Puzzle[] next = new Puzzle[population.length];
-        Arrays.sort(population);
-        culling(population);
+        Puzzle parent1, parent2; //Parents to make children for mutations
+        Puzzle[] next = new Puzzle[population.length]; //Next generation
+        Arrays.sort(population); //Sorts current generation from least to greatest score
+        culling(population); //Removes the lowest scoring members of the population
 
         for (int i = 0; i < next.length * PERCENTAGE / 100; i++) { //Gets the best from previous generation. Elitism
             next[i] = population[population.length - i - 1];
         }
 
-        for (int i = next.length * PERCENTAGE / 100; i < next.length; i += 2) {
-            Puzzle[] parents = population.clone();
-            parent1 = chooseParent(parents);
-            parent2 = chooseParent(parents);
+        for (int i = next.length * PERCENTAGE / 100; i < next.length; i += 2) { //Adds children
+            Puzzle[] parents = population.clone(); //Gets a clone of the current, culled population
+            parent1 = chooseParent(parents); //Chooses parent1 by weighted random
+            parent2 = chooseParent(parents); //Chooses parent2 by weighted random
             System.out.println("Parents Chosen");
-            Puzzle[] children = mutation(parent1, parent2);
+            Puzzle[] children = mutation(parent1, parent2); //Gets the mutated children of the parents
             System.out.println("Mutation Complete");
-            next[i] = children[0];
-            if (i + 1 < next.length)
+            next[i] = children[0]; //Adds the first child
+            if (i + 1 < next.length) //Adds the second child if there is still space in the next generation
                 next[i + 1] = children[1];
         }
-        population = next;
+
+        population = next; //Changes the current population to be the updated generation
         generation++;
     }
 
@@ -63,31 +64,32 @@ public class DefaultOperation {
      * @param next array of puzzles
      * @return one of the puzzles
      */
-    private Puzzle chooseParent(Puzzle[] next) { //TODO duplication prevention
-        /* Check Assignment 2 video on the spreadsheet for implementation method*/
-        double random = new Random().nextDouble();
-        double cumulative = 0;
-        double total = 0;
-        double lowestScore = Double.MAX_VALUE;
-        for (Puzzle p : next) {
+    private Puzzle chooseParent(Puzzle[] next) {
+        double random = new Random().nextDouble(); //Random double from 0 to 1
+        double cumulative = 0; //Cumulative percentage
+        double total = 0; //Total score of population
+        double lowestScore = Double.MAX_VALUE; //Used for scores in the negatives to properly work with weighted percentage
+
+        for (Puzzle p : next) { //Gets total score
             if (p != null) {
-                if (lowestScore == Double.MAX_VALUE)
-                    lowestScore = p.getScore()+1;
-                total += p.getScore() + lowestScore;
+                if (p.getScore() + 1 < lowestScore)
+                    lowestScore = p.getScore()+1; //Sets lowestScore as the parent with the lowest score + 1 so it still can be chosen
+                total += p.getScore() + lowestScore; //Total is the sum of the actual parent score and the lowest score so all the numbers are positive
             }
         }
-        for (Puzzle p : next) {
+
+        for (Puzzle p : next) { //Picks parent at random
             if (p != null) {
-                cumulative += (p.getScore() + lowestScore) / total;
-                if (random < cumulative) {
-                    Puzzle parent = p;
-                    p = null;
+                cumulative += (p.getScore() + lowestScore) / total; //Calculates cumulative percentage
+                if (random < cumulative) { //If random is less than cumulative, then it is with in the range of the parent
+                    Puzzle parent = p; //Gets parent to return
+                    p = null; //Sets parent to null so it can't be chosen again by parent2. This is reverted after the for loop in nextGeneration()
                     return parent;
                 }
-
             }
         }
-        return null;
+
+        return null; //Default case
     }
 
     /**
@@ -96,7 +98,8 @@ public class DefaultOperation {
      * @param next Array of puzzles with the first 30% turned to null
      */
     private void culling(Puzzle[] next) {
-        for (int i = 0; i < next.length * 3 / 10; i++) {
+        int PERCENTAGE = 30; //Percentage of population to cull
+        for (int i = 0; i < next.length * PERCENTAGE / 100; i++) {
             next[i] = null;
         }
     }
