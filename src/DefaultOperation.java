@@ -16,19 +16,21 @@ public class DefaultOperation {
      * Creates the next generation of puzzles
      */
     public void nextGeneration() {
+        int PERCENTAGE = 20;
         System.out.println(generation);
         Puzzle parent1, parent2;
         Puzzle[] next = new Puzzle[population.length];
         Arrays.sort(population);
         culling(population);
 
-        for (int i = 0; i < next.length * 2 / 10; i++) { //Gets the best from previous generation. Elitism
+        for (int i = 0; i < next.length * PERCENTAGE / 100; i++) { //Gets the best from previous generation. Elitism
             next[i] = population[population.length - i - 1];
         }
 
-        for (int i = next.length * 2 / 10; i < next.length; i += 2) {
-            parent1 = chooseParent(population);
-            parent2 = chooseParent(population);
+        for (int i = next.length * PERCENTAGE / 100; i < next.length; i += 2) {
+            Puzzle[] parents = population.clone();
+            parent1 = chooseParent(parents);
+            parent2 = chooseParent(parents);
             System.out.println("Parents Chosen");
             Puzzle[] children = mutation(parent1, parent2);
             System.out.println("Mutation Complete");
@@ -70,13 +72,13 @@ public class DefaultOperation {
         for (Puzzle p : next) {
             if (p != null) {
                 if (lowestScore == Double.MAX_VALUE)
-                    lowestScore = p.getScore();
-                total += p.getScore() + lowestScore + 1;
+                    lowestScore = p.getScore()+1;
+                total += p.getScore() + lowestScore;
             }
         }
         for (Puzzle p : next) {
             if (p != null) {
-                cumulative += (p.getScore() + lowestScore + 1) / total;
+                cumulative += (p.getScore() + lowestScore) / total;
                 if (random < cumulative) {
                     Puzzle parent = p;
                     p = null;
