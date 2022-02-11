@@ -1,4 +1,3 @@
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -16,11 +15,15 @@ public class NumberAllocationOperation extends DefaultOperation {
         generateFirstGeneration(nums, puzzles);
         super.setPopulation(puzzles);
 
+        for (int i = 0; i < super.getPopulation().length; i++) {
+            System.out.println(super.getPopulation()[i].getScore());
+        }
+
         while (getTime() < time) nextGeneration();
-        for(int i = 0; i<super.getPopulation().length; i++) {
+        for (int i = 0; i < super.getPopulation().length; i++) {
             Puzzle p = super.getPopulation()[i];
             if (p != null)
-                System.out.print(p.getScore() +" "+i+ " \t");
+                System.out.print(p.getScore() + " " + i + " \t");
         }
 
         Puzzle[] finishedAlg = this.getPopulation();
@@ -143,9 +146,6 @@ public class NumberAllocationOperation extends DefaultOperation {
         Puzzle[] mutationReturn = {Child1, Child2};
         return mutationReturn;
     }
-
-
-
 
 
     /**

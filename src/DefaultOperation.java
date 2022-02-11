@@ -41,6 +41,9 @@ public class DefaultOperation {
 
         population = next; //Changes the current population to be the updated generation
         generation++;
+        for (int i = 0; i < population.length; i++) {
+            System.out.println(population[i].getScore());
+        }
     }
 
     /**
@@ -73,18 +76,19 @@ public class DefaultOperation {
 
         for (Puzzle p : next) { //Gets total score
             if (p != null) {
-                if (p.getScore() + 1 < lowestScore)
-                    lowestScore = p.getScore()+1; //Sets lowestScore as the parent with the lowest score + 1 so it still can be chosen
-                total += p.getScore() + lowestScore; //Total is the sum of the actual parent score and the lowest score so all the numbers are positive
+                if (p.getScore() < lowestScore) {
+                    lowestScore = p.getScore(); //Sets lowestScore as the parent with the lowest score
+                }
+                total += (p.getScore() + lowestScore); //Total is the sum of the actual parent score and the lowest score so all the numbers are positive
             }
         }
 
-        for (Puzzle p : next) { //Picks parent at random
-            if (p != null) {
-                cumulative += (p.getScore() + lowestScore) / total; //Calculates cumulative percentage
+        for (int i = 0; i < next.length; i++) { //Picks parent at random
+            if (next[i] != null) {
+                cumulative += (next[i].getScore() + lowestScore) / total; //Calculates cumulative percentage
                 if (random < cumulative) { //If random is less than cumulative, then it is with in the range of the parent
-                    Puzzle parent = p; //Gets parent to return
-                    p = null; //Sets parent to null so it can't be chosen again by parent2. This is reverted after the for loop in nextGeneration()
+                    Puzzle parent = next[i]; //Gets parent to return
+                    next[i] = null; //Sets parent to null so it can't be chosen again by parent2. This is reverted after the for loop in nextGeneration()
                     return parent;
                 }
             }
