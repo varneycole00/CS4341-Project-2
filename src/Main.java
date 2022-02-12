@@ -3,9 +3,10 @@ import java.util.ArrayList;
 
 public class Main {
     /**
-     * This is the main for the project, run this to have the A* algorithm run
+     * This is the main for the project, run this to have the GA algorithm run and solve a puzzle
      *
-     * @param args The first command line arg should be a heuristic number (1-6) and the second should be a filename (Without spaces)
+     * @param args The first command line arg should be which puzzle type (1 or 2), the second should be the file path,
+     *             and the third should be the amount of seconds to have the algorithm run before giving an answer
      */
     public static void main(String[] args) {
         int currPuzzle;
@@ -26,15 +27,12 @@ public class Main {
             System.out.println("Please input the puzzle number as the first input.");
             return;
         }
-        if (!(currPuzzle == 1) && !(currPuzzle == 2)) {
-            System.out.println("Please input a correct puzzle number, either 1 or 2");
-        }
 
         GenerateBoards currBoard;
         String puzzleFile = args[1];
         int time = Integer.parseInt(args[2]);
         try {
-            currBoard = new GenerateBoards(currPuzzle, 12345); //TODO for quick testing but change before submission
+            currBoard = new GenerateBoards(currPuzzle, 55555); //TODO for quick testing but change before submission
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -49,6 +47,9 @@ public class Main {
                 ParseInput parseTwo = new ParseInput(currPuzzle, puzzleFile);
                 new TowerBuildingOperation((ArrayList<Piece>) parseTwo.getArrayList(), 10, time);
                 //System.out.println(parseTwo.getArrayList());
+                break;
+            default:
+                System.out.println("Please input a correct puzzle number, either 1 or 2");
                 break;
         }
     }

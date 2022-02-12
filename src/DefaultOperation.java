@@ -131,10 +131,10 @@ public class DefaultOperation {
         if(total == 0){
             Puzzle parent = null;
             int i = 0;
-            do {
+            while (parent==null) {
                 i = new Random().nextInt(next.length);
                 parent = next[i]; //Gets parent to return
-            } while (parent==null);
+            }
             next[i] = null; //Sets parent to null so it can't be chosen again by parent2. This is reverted after the for loop in nextGeneration()
             return parent;
         }
