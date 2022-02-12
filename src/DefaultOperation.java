@@ -8,11 +8,13 @@ public class DefaultOperation {
     private Puzzle largestParent;
     private Puzzle currentLargest;
     private int generation;
+    private int genFound;
 
     public DefaultOperation(int size) {
         startTime = System.currentTimeMillis();
         population = new Puzzle[size];
         generationSame = 0;
+        genFound = 0;
         largestParent = null;
         currentLargest = null;
     }
@@ -22,7 +24,6 @@ public class DefaultOperation {
      */
     public void nextGeneration() {
         int PERCENTAGE = 20; //Percentage of current population to bring over
-        System.out.println(generationSame);
         Puzzle parent1, parent2; //Parents to make children for mutations
         Puzzle[] next = new Puzzle[population.length]; //Next generation
         Arrays.sort(population); //Sorts current generation from least to greatest score
@@ -55,9 +56,6 @@ public class DefaultOperation {
         }
 
         population = next; //Changes the current population to be the updated generation
-        for (int i = 0; i < population.length; i++) {
-            System.out.println(population[i].getScore());
-        }
         generation++;
     }
 
@@ -88,19 +86,20 @@ public class DefaultOperation {
         double cumulative = 0; //Cumulative percentage
         double total = 0; //Total score of population
         double lowestScore = Double.MAX_VALUE; //Used for scores in the negatives to properly work with weighted percentage
-
+        double count = 0;
         for (Puzzle p : next) { //Gets total score
             if (p != null) {
-                if (p.getScore() + 1 < lowestScore) {
-                    lowestScore = p.getScore()+ 1; //Sets lowestScore as the parent with the lowest score
+                count++;
+                if (p.getScore() < lowestScore) {
+                    lowestScore = p.getScore(); //Sets lowestScore as the parent with the lowest score
                 }
                 total += (p.getScore() + lowestScore); //Total is the sum of the actual parent score and the lowest score so all the numbers are positive
             }
         }
-
+        double average = total / count;
         for (int i = 0; i < next.length; i++) { //Picks parent at random
             if (next[i] != null) {
-                cumulative += (next[i].getScore() + lowestScore) / total; //Calculates cumulative percentage
+                cumulative += (next[i].getScore() + lowestScore + average) / total; //Calculates cumulative percentage
                 if (random < cumulative) { //If random is less than cumulative, then it is with in the range of the parent
                     Puzzle parent = next[i]; //Gets parent to return
                     next[i] = null; //Sets parent to null so it can't be chosen again by parent2. This is reverted after the for loop in nextGeneration()
@@ -125,10 +124,14 @@ public class DefaultOperation {
     }
 
     public void randomRestart(Puzzle[] newPuzzle){
-        if(largestParent==null)
+        if(largestParent==null) {
             largestParent = currentLargest;
-        else if(largestParent.getScore() < currentLargest.getScore())
+            genFound = generation;
+        }
+        else if(largestParent.getScore() < currentLargest.getScore()) {
             largestParent = currentLargest;
+            genFound = generation;
+        }
 
         generationSame = 0;
         population = newPuzzle.clone();
@@ -158,5 +161,9 @@ public class DefaultOperation {
 
     public int getGeneration() {
         return generation;
+    }
+
+    public int getGenFound() {
+        return genFound;
     }
 }

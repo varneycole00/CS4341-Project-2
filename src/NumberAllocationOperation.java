@@ -17,9 +17,11 @@ public class NumberAllocationOperation extends DefaultOperation {
         generateFirstGeneration(nums, puzzles);
         super.setPopulation(puzzles.clone());
 
+        /*
         for (int i = 0; i < super.getPopulation().length; i++) {
             System.out.println(super.getPopulation()[i].getScore());
         }
+         */
 
         while (getTime() < time) {
             if(getGenerationSame() < RESTART)
@@ -29,7 +31,17 @@ public class NumberAllocationOperation extends DefaultOperation {
                 randomRestart(puzzles.clone());
             }
         }
-        System.out.println("Largest Score: "+getLargestParent().getScore());
+        NumberAllocation bestResult = (NumberAllocation) getLargestParent();
+
+        System.out.println("Largest Score: "+bestResult.getScore());
+        System.out.println("Generation Found: "+getGenFound());
+        System.out.println("Bins:");
+        System.out.println("Bin 1: "+bestResult.getBin1());
+        System.out.println("Bin 2: "+bestResult.getBin2());
+        System.out.println("Bin 3: "+bestResult.getBin3());
+        System.out.println("Bin 4: "+bestResult.getBin4());
+
+
     }
 
 
@@ -43,7 +55,7 @@ public class NumberAllocationOperation extends DefaultOperation {
                     placedInBin = putInBin(j, currPuzzle, copyOfFirstGen);
                 }
             }
-            System.out.println("Puzzle made!");
+            //System.out.println("Puzzle made!");
             puzzles[i] = currPuzzle;
         }
     }
