@@ -24,7 +24,7 @@ public class TowerBuilding extends Puzzle implements Cloneable {
                 weight = tower.size() - i - 1; //Weight is total number of pieces above a piece
                 if (i != 0 && tower.get(i).getType() != PieceType.WALL) //Rule 3
                     return 0;
-                if (tower.get(i + 1).getWidth() >= tower.get(i).getWidth()) //Rule 4
+                if (tower.get(i + 1).getWidth() > tower.get(i).getWidth()) //Rule 4
                     return 0;
                 if (tower.get(i).getStrength() < weight) //Rule 5
                     return 0;
