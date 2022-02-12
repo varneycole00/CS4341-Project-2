@@ -7,6 +7,7 @@ public class TowerBuilding extends Puzzle implements Cloneable {
     public TowerBuilding(ArrayList<Piece> pieces) {
         super();
         this.pieces = pieces;
+        tower = new ArrayList<>();
     }
 
     @Override
@@ -33,5 +34,11 @@ public class TowerBuilding extends Puzzle implements Cloneable {
 
     }
 
+    public ArrayList<Piece> getTower() {
+        return tower;
+    }
 
+    public void setTower(ArrayList<Piece> tower) {
+        this.tower = tower;
+    }
 }

@@ -128,9 +128,20 @@ public class DefaultOperation {
             }
         }
         double average = total / count;
+        if(total == 0){
+            Puzzle parent = null;
+            int i = 0;
+            do {
+                i = new Random().nextInt(next.length);
+                parent = next[i]; //Gets parent to return
+            } while (parent==null);
+            next[i] = null; //Sets parent to null so it can't be chosen again by parent2. This is reverted after the for loop in nextGeneration()
+            return parent;
+        }
+        else
         for (int i = 0; i < next.length; i++) { //Picks parent at random
             if (next[i] != null) {
-                cumulative += (next[i].getScore() + lowestScore + average) / total; //Calculates cumulative percentage
+                cumulative += (next[i].getScore() + lowestScore + average) / (total+ average*count); //Calculates cumulative percentage
                 if (random < cumulative) { //If random is less than cumulative, then it is with in the range of the parent
                     Puzzle parent = next[i]; //Gets parent to return
                     next[i] = null; //Sets parent to null so it can't be chosen again by parent2. This is reverted after the for loop in nextGeneration()

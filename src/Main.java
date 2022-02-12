@@ -47,7 +47,7 @@ public class Main {
             case 2:
                 puzzleFile = "src/boards/tower_building.txt"; //TODO for quick testing but change before submission
                 ParseInput parseTwo = new ParseInput(currPuzzle, puzzleFile);
-                new TowerBuildingOperation((ArrayList<Piece>) parseTwo.getArrayList(), 100, time);
+                new TowerBuildingOperation((ArrayList<Piece>) parseTwo.getArrayList(), 10, time);
                 //System.out.println(parseTwo.getArrayList());
                 break;
         }

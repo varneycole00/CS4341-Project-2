@@ -55,8 +55,8 @@ public class GenerateBoards {
     private void towerBuilding() throws IOException {
         FileWriter board = new FileWriter("src/boards/tower_building.txt"); //Starts the file writer for a new text file
         int random;
-        for (int i = 0; i < 10; i++) { //TODO need to check later on how many pieces to build
-            random = r.nextInt(2);
+        for (int i = 0; i < 10; i++) {
+            random = r.nextInt(3);
             switch (random) {
                 case 0:
                     board.write("Door\t");
@@ -71,7 +71,7 @@ public class GenerateBoards {
                     break;
             }
             for (int j = 0; j < 3; j++) {
-                random = r.nextInt(5) + 1; //TODO clarification on "natural" range
+                random = r.nextInt(9) + 1;
                 board.write(random + "\t");
             }
             if (i != 9) board.write("\n");
