@@ -17,12 +17,6 @@ public class NumberAllocationOperation extends DefaultOperation {
         generateFirstGeneration(nums, puzzles);
         super.setPopulation(puzzles.clone());
 
-        /*
-        for (int i = 0; i < super.getPopulation().length; i++) {
-            System.out.println(super.getPopulation()[i].getScore());
-        }
-         */
-
         while (getTime() < time) {
             if(getGenerationSame() < RESTART)
                 nextGeneration();
@@ -35,6 +29,7 @@ public class NumberAllocationOperation extends DefaultOperation {
 
         System.out.println("Largest Score: "+bestResult.getScore());
         System.out.println("Generation Found: "+getGenFound());
+        System.out.println("Total Generations Searched: "+getGeneration());
         System.out.println("Bins:");
         System.out.println("Bin 1: "+bestResult.getBin1());
         System.out.println("Bin 2: "+bestResult.getBin2());

@@ -1,15 +1,22 @@
 import java.util.Arrays;
 import java.util.Random;
 
+/**
+ * The generalized Genetic Algorithm
+ */
 public class DefaultOperation {
-    private final long startTime;
-    private Puzzle[] population;
-    private int generationSame;
-    private Puzzle largestParent;
-    private Puzzle currentLargest;
-    private int generation;
-    private int genFound;
+    private final long startTime; //Time when algorithm is started. Used to calculate how many seconds have passed
+    private Puzzle[] population; //Current population of Puzzles
+    private int generationSame; //How many times the largest puzzle score stays the same. Used for random restarts
+    private Puzzle largestParent; //Largest Puzzle from all iterations of random start
+    private Puzzle currentLargest; //Largest Puzzle from current iteration of random start
+    private int generation; //Gets total number of generations
+    private int genFound; //Gets generation the largest was found
 
+    /**
+     * Creates an algorithm of Puzzles with a set population size
+     * @param size Number of puzzles in each generation
+     */
     public DefaultOperation(int size) {
         startTime = System.currentTimeMillis();
         population = new Puzzle[size];
@@ -27,7 +34,13 @@ public class DefaultOperation {
         Puzzle parent1, parent2; //Parents to make children for mutations
         Puzzle[] next = new Puzzle[population.length]; //Next generation
         Arrays.sort(population); //Sorts current generation from least to greatest score
-        Puzzle genLargest = population[population.length-1];
+
+        /*
+            Compares best Puzzle in this iteration with the best Puzzle in this generation
+            If they're the same genLargest is updated to indicate we might be at a plateau.
+            If this gen's largest is larger currentLargest is updated and genLargest is reset.
+         */
+        Puzzle genLargest = population[population.length-1]; //Generational largest
         if(currentLargest == null)
             currentLargest = genLargest;
         else if(genLargest.getScore() == currentLargest.getScore())
@@ -35,6 +48,19 @@ public class DefaultOperation {
         else if(genLargest.getScore() > currentLargest.getScore()) {
             currentLargest = genLargest;
             generationSame = 0;
+        }
+
+        /*
+            Compares best Puzzle from all iterations with the current iteration. If current largest
+            is better it replaces the old best and updates genFound.
+         */
+        if(largestParent==null) {
+            largestParent = currentLargest;
+            genFound = generation;
+        }
+        else if(largestParent.getScore() < currentLargest.getScore()) {
+            largestParent = currentLargest;
+            genFound = generation;
         }
 
         culling(population); //Removes the lowest scoring members of the population
@@ -57,6 +83,8 @@ public class DefaultOperation {
 
         population = next; //Changes the current population to be the updated generation
         generation++;
+        if(generation%10000==0)
+            System.out.println("Generation " + generation + " reached");
     }
 
     /**
@@ -70,6 +98,10 @@ public class DefaultOperation {
         return mutationReturn;
     }
 
+    /**
+     * Gets time elapsed
+     * @return time in seconds from start of algorithm
+     */
     public long getTime() {
         return (System.currentTimeMillis() - startTime) / 1000;
     }
@@ -82,7 +114,6 @@ public class DefaultOperation {
      */
     private Puzzle chooseParent(Puzzle[] next) {
         double random = new Random().nextDouble(); //Random double from 0 to 1
-                                                              // TODO remove seed from random
         double cumulative = 0; //Cumulative percentage
         double total = 0; //Total score of population
         double lowestScore = Double.MAX_VALUE; //Used for scores in the negatives to properly work with weighted percentage
@@ -123,16 +154,11 @@ public class DefaultOperation {
         }
     }
 
+    /**
+     * Starts the algorithm again with a new set of puzzles
+     * @param newPuzzle New set of puzzles to perform the algorithm on
+     */
     public void randomRestart(Puzzle[] newPuzzle){
-        if(largestParent==null) {
-            largestParent = currentLargest;
-            genFound = generation;
-        }
-        else if(largestParent.getScore() < currentLargest.getScore()) {
-            largestParent = currentLargest;
-            genFound = generation;
-        }
-
         generationSame = 0;
         population = newPuzzle.clone();
         currentLargest = null;
