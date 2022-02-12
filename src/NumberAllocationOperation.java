@@ -13,20 +13,23 @@ public class NumberAllocationOperation extends DefaultOperation {
         int RESTART = 5; // Number of generations before random restart
         NumberAllocation[] puzzles = new NumberAllocation[population];
         this.numbers = nums;
+
         // create the first generation
         generateFirstGeneration(nums, puzzles);
         super.setPopulation(puzzles.clone());
 
+        //Runs the GA algorithm for the given amount of time.
         while (getTime() < time) {
-            if(getGenerationSame() < RESTART)
+            if(getGenerationSame() < RESTART) //Continues the algorithm if not stuck at plateau
                 nextGeneration();
-            else {
+            else { //Random restart with a new set of puzzles if current iteration is stuck
                 generateFirstGeneration(nums, puzzles);
                 randomRestart(puzzles.clone());
             }
         }
-        NumberAllocation bestResult = (NumberAllocation) getLargestParent();
+        NumberAllocation bestResult = (NumberAllocation) getLargestParent(); //Gets the best parent
 
+        //Prints the results of the GA
         System.out.println("Largest Score: "+bestResult.getScore());
         System.out.println("Generation Found: "+getGenFound());
         System.out.println("Total Generations Searched: "+getGeneration());

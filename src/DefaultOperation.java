@@ -84,7 +84,7 @@ public class DefaultOperation {
         population = next; //Changes the current population to be the updated generation
         generation++;
         if(generation%10000==0)
-            System.out.println("Generation " + generation + " reached");
+            System.out.println("Generation " + generation + " reached"); //Updates the user so they know the algorithm isn't stuck and is still going
     }
 
     /**
