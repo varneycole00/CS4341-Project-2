@@ -42,12 +42,12 @@ public class Main {
             case 1:
                 puzzleFile = "src/boards/number_allocation.txt"; //TODO for quick testing but change before submission
                 ParseInput parseOne = new ParseInput(currPuzzle, puzzleFile);
-                new NumberAllocationOperation((ArrayList<Float>) parseOne.getArrayList(), 10, time);
+                new NumberAllocationOperation((ArrayList<Float>) parseOne.getArrayList(), 100, time);
                 break;
             case 2:
                 puzzleFile = "src/boards/tower_building.txt"; //TODO for quick testing but change before submission
                 ParseInput parseTwo = new ParseInput(currPuzzle, puzzleFile);
-                new TowerBuildingOperation((ArrayList<Piece>) parseTwo.getArrayList(), 10, time);
+                new TowerBuildingOperation((ArrayList<Piece>) parseTwo.getArrayList(), 100, time);
                 //System.out.println(parseTwo.getArrayList());
                 break;
         }
