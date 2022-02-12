@@ -4,12 +4,16 @@ import java.util.Random;
 public class DefaultOperation {
     private final long startTime;
     private Puzzle[] population;
-    private int generation;
+    private int generationSame;
+    private Puzzle largestParent;
+    private Puzzle currentLargest;
 
     public DefaultOperation(int size) {
         startTime = System.currentTimeMillis();
         population = new Puzzle[size];
-        generation = 0;
+        generationSame = 0;
+        largestParent = null;
+        currentLargest = null;
     }
 
     /**
@@ -17,10 +21,20 @@ public class DefaultOperation {
      */
     public void nextGeneration() {
         int PERCENTAGE = 20; //Percentage of current population to bring over
-        System.out.println(generation);
+        System.out.println(generationSame);
         Puzzle parent1, parent2; //Parents to make children for mutations
         Puzzle[] next = new Puzzle[population.length]; //Next generation
         Arrays.sort(population); //Sorts current generation from least to greatest score
+        Puzzle genLargest = population[population.length-1];
+        if(currentLargest == null)
+            currentLargest = genLargest;
+        else if(genLargest.getScore() == currentLargest.getScore())
+            generationSame++;
+        else if(genLargest.getScore() > currentLargest.getScore()) {
+            currentLargest = genLargest;
+            generationSame = 0;
+        }
+
         culling(population); //Removes the lowest scoring members of the population
 
         for (int i = 0; i < next.length * PERCENTAGE / 100; i++) { //Gets the best from previous generation. Elitism
@@ -31,16 +45,15 @@ public class DefaultOperation {
             Puzzle[] parents = population.clone(); //Gets a clone of the current, culled population
             parent1 = chooseParent(parents); //Chooses parent1 by weighted random
             parent2 = chooseParent(parents); //Chooses parent2 by weighted random
-            System.out.println("Parents Chosen");
+           // System.out.println("Parents Chosen");
             Puzzle[] children = mutation(parent1, parent2); //Gets the mutated children of the parents
-            System.out.println("Mutation Complete");
+            //System.out.println("Mutation Complete");
             next[i] = children[0]; //Adds the first child
             if (i + 1 < next.length) //Adds the second child if there is still space in the next generation
                 next[i + 1] = children[1];
         }
 
         population = next; //Changes the current population to be the updated generation
-        generation++;
         for (int i = 0; i < population.length; i++) {
             System.out.println(population[i].getScore());
         }
@@ -109,11 +122,35 @@ public class DefaultOperation {
         }
     }
 
+    public void randomRestart(Puzzle[] newPuzzle){
+        if(largestParent==null)
+            largestParent = currentLargest;
+        else if(largestParent.getScore() < currentLargest.getScore())
+            largestParent = currentLargest;
+
+        generationSame = 0;
+        population = newPuzzle.clone();
+        currentLargest = null;
+    }
+
+
     public Puzzle[] getPopulation() {
         return population;
     }
 
     public void setPopulation(Puzzle[] population) {
         this.population = population;
+    }
+
+    public int getGenerationSame() {
+        return generationSame;
+    }
+
+    public void setGeneration(int generation) {
+        this.generationSame = generation;
+    }
+
+    public Puzzle getLargestParent() {
+        return largestParent;
     }
 }

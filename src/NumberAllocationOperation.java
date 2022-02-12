@@ -9,26 +9,26 @@ public class NumberAllocationOperation extends DefaultOperation {
 
     public NumberAllocationOperation(ArrayList<Float> nums, int population, int time) {
         super(population);
+        int RESTART = 5; // Number of generations before random restart
         NumberAllocation[] puzzles = new NumberAllocation[population];
         this.numbers = nums;
         // create the first generation
         generateFirstGeneration(nums, puzzles);
-        super.setPopulation(puzzles);
+        super.setPopulation(puzzles.clone());
 
         for (int i = 0; i < super.getPopulation().length; i++) {
             System.out.println(super.getPopulation()[i].getScore());
         }
 
-        while (getTime() < time) nextGeneration();
-        for (int i = 0; i < super.getPopulation().length; i++) {
-            Puzzle p = super.getPopulation()[i];
-            if (p != null)
-                System.out.print(p.getScore() + " " + i + " \t");
+        while (getTime() < time) {
+            if(getGenerationSame() < RESTART)
+                nextGeneration();
+            else {
+                generateFirstGeneration(nums, puzzles);
+                randomRestart(puzzles.clone());
+            }
         }
-
-        Puzzle[] finishedAlg = this.getPopulation();
-        NumberAllocation puzzle0 = (NumberAllocation) finishedAlg[0];
-        System.out.println(puzzle0.getScore());
+        System.out.println("Largest Score: "+getLargestParent().getScore());
     }
 
 

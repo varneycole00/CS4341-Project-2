@@ -1,4 +1,4 @@
-public class Puzzle implements Comparable<Puzzle> {
+public class Puzzle implements Comparable<Puzzle>, Cloneable{
 
     /**
      * Gets score of Puzzle
