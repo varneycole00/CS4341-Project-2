@@ -34,7 +34,7 @@ public class TowerBuilding extends Puzzle implements Cloneable {
             for (Piece p : tower)
                 cost += p.getCost(); //Gets total cost of tower if legal
 
-            return 10 + tower.size() - cost; //Given from assignment
+            return 10 + tower.size()*tower.size() - cost; //Given from assignment
         }
     }
 
