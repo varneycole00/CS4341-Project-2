@@ -7,6 +7,7 @@ public class DefaultOperation {
     private int generationSame;
     private Puzzle largestParent;
     private Puzzle currentLargest;
+    private int generation;
 
     public DefaultOperation(int size) {
         startTime = System.currentTimeMillis();
@@ -57,6 +58,7 @@ public class DefaultOperation {
         for (int i = 0; i < population.length; i++) {
             System.out.println(population[i].getScore());
         }
+        generation++;
     }
 
     /**
@@ -81,7 +83,7 @@ public class DefaultOperation {
      * @return one of the puzzles
      */
     private Puzzle chooseParent(Puzzle[] next) {
-        double random = new Random(12345).nextDouble(); //Random double from 0 to 1
+        double random = new Random().nextDouble(); //Random double from 0 to 1
                                                               // TODO remove seed from random
         double cumulative = 0; //Cumulative percentage
         double total = 0; //Total score of population
@@ -89,8 +91,8 @@ public class DefaultOperation {
 
         for (Puzzle p : next) { //Gets total score
             if (p != null) {
-                if (p.getScore() < lowestScore) {
-                    lowestScore = p.getScore(); //Sets lowestScore as the parent with the lowest score
+                if (p.getScore() + 1 < lowestScore) {
+                    lowestScore = p.getScore()+ 1; //Sets lowestScore as the parent with the lowest score
                 }
                 total += (p.getScore() + lowestScore); //Total is the sum of the actual parent score and the lowest score so all the numbers are positive
             }
@@ -152,5 +154,9 @@ public class DefaultOperation {
 
     public Puzzle getLargestParent() {
         return largestParent;
+    }
+
+    public int getGeneration() {
+        return generation;
     }
 }

@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 
 public class NumberAllocationOperation extends DefaultOperation {
@@ -95,31 +96,48 @@ public class NumberAllocationOperation extends DefaultOperation {
         ArrayList<Float> Child2Bin3 = new ArrayList<>();
         ArrayList<Float> Child1Bin4 = new ArrayList<>();
         ArrayList<Float> Child2Bin4 = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            if (i < 5) {
-                Child1Bin1.add(nA1.getBin1().get(i));
-                Child2Bin1.add(nA2.getBin1().get(i));
 
-                Child1Bin2.add(nA1.getBin2().get(i));
-                Child2Bin2.add(nA2.getBin2().get(i));
+        double random = new Random().nextDouble(); //Random double from 0 to 1
+        if(random < 0.1){
+            Child1Bin1 = nA1.getBin2();
+            Child1Bin2 = nA1.getBin3();
+            Child1Bin3 = nA1.getBin4();
+            Child1Bin4 = nA1.getBin1();
+            Child2Bin1 = nA2.getBin2();
+            Child2Bin2 = nA2.getBin3();
+            Child2Bin3 = nA2.getBin4();
+            Child2Bin4 = nA2.getBin1();
 
-                Child1Bin3.add(nA1.getBin3().get(i));
-                Child2Bin3.add(nA2.getBin3().get(i));
+        }
+        else {
 
-                Child1Bin4.add(nA1.getBin4().get(i));
-                Child2Bin4.add(nA2.getBin4().get(i));
-            } else {
-                Child1Bin1.add(nA2.getBin1().get(i));
-                Child2Bin1.add(nA1.getBin1().get(i));
+            int rand = (int) (Math.floor(Math.random() * 10)) + 1;
+            for (int i = 0; i < 10; i++) {
+                if (i < rand) {
+                    Child1Bin1.add(nA1.getBin1().get(i));
+                    Child2Bin1.add(nA2.getBin1().get(i));
 
-                Child1Bin2.add(nA2.getBin2().get(i));
-                Child2Bin2.add(nA1.getBin2().get(i));
+                    Child1Bin2.add(nA1.getBin2().get(i));
+                    Child2Bin2.add(nA2.getBin2().get(i));
 
-                Child1Bin3.add(nA2.getBin3().get(i));
-                Child2Bin3.add(nA1.getBin3().get(i));
+                    Child1Bin3.add(nA1.getBin3().get(i));
+                    Child2Bin3.add(nA2.getBin3().get(i));
 
-                Child1Bin4.add(nA2.getBin4().get(i));
-                Child2Bin4.add(nA1.getBin4().get(i));
+                    Child1Bin4.add(nA1.getBin4().get(i));
+                    Child2Bin4.add(nA2.getBin4().get(i));
+                } else {
+                    Child1Bin1.add(nA2.getBin1().get(i));
+                    Child2Bin1.add(nA1.getBin1().get(i));
+
+                    Child1Bin2.add(nA2.getBin2().get(i));
+                    Child2Bin2.add(nA1.getBin2().get(i));
+
+                    Child1Bin3.add(nA2.getBin3().get(i));
+                    Child2Bin3.add(nA1.getBin3().get(i));
+
+                    Child1Bin4.add(nA2.getBin4().get(i));
+                    Child2Bin4.add(nA1.getBin4().get(i));
+                }
             }
         }
         Child1.setBin1(Child1Bin1);
