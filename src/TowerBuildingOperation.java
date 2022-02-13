@@ -8,9 +8,15 @@ public class TowerBuildingOperation extends DefaultOperation {
     public TowerBuildingOperation(ArrayList<Piece> pieces, int population, int time) {
         super(population);
         this.pieces = pieces;
-        int RESTART = 10; // Number of generations before random restart
+        int RESTART = 1000; // Number of generations before random restart
         TowerBuilding[] puzzles = new TowerBuilding[population];
         generateFirstGeneration(pieces, puzzles);
+        TowerBuilding test = new TowerBuilding(pieces);
+        test.getTower().add(pieces.get(3));
+        test.getTower().add(pieces.get(1));
+        test.getTower().add(pieces.get(5));
+        System.out.println(test.getTower());
+       // puzzles[0]= test;
         super.setPopulation(puzzles);
 
         while (getTime() < time) {
@@ -47,7 +53,7 @@ public class TowerBuildingOperation extends DefaultOperation {
         ArrayList<Piece> child2 = new ArrayList<>();
         Random r = new Random();
         int random = r.nextInt(2);
-        random=1; //TODO here to test pure half/half only
+        Piece p = null;
         switch(random){
             case 0: //Half-Half swap
                 for(int i = 0; i < tower1.size() / 2; i++)
@@ -66,29 +72,37 @@ public class TowerBuildingOperation extends DefaultOperation {
             case 1: //Random inserts
                 child1 = (ArrayList<Piece>) tower1.clone();
                 child2 = (ArrayList<Piece>) tower2.clone();
-                for(Piece p: child2)
-                    if(!child1.contains(p)) {
+                p = null;
+                int iChild1Size = child1.size();
+                int iChild2Size = child2.size();
+
+                for(int i = 0; i<(pieces.size() - iChild1Size)/2; i++){
+                        do {
+                            p = pieces.get(r.nextInt(pieces.size()));
+                        } while(child1.contains(p));
                         if(child1.size()>0)
-                        child1.add(r.nextInt(child1.size()), p);
+                         child1.add(r.nextInt(child1.size()), p);
                         else child1.add(p);
                     }
-                for(Piece p: child1)
-                    if(!child2.contains(p)) {
-                        if(child2.size()>0)
-                            child2.add(r.nextInt(child2.size()), p);
-                        else child2.add(p);
-                    }
-                break;
-            case 2:
+
+                for(int i = 0; i<(pieces.size() - iChild2Size)/2; i++){
+                    do {
+                        p = pieces.get(r.nextInt(pieces.size()));
+                    } while(child2.contains(p));
+                    if(child2.size()>0)
+                        child2.add(r.nextInt(child2.size()), p);
+                    else child2.add(p);
+                }
                 break;
         }
         TowerBuilding first = new TowerBuilding(pieces);
         first.setTower(child1);
         TowerBuilding second = new TowerBuilding(pieces);
-        first.setTower(child2);
+        second.setTower(child2);
         Puzzle[] mutationReturn = {first, second};
         return mutationReturn;
     }
+
 
     public void generateFirstGeneration(ArrayList<Piece> pieces, TowerBuilding[] puzzles){
         Random r= new Random();

@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Piece {
 
     private PieceType type;
@@ -57,5 +59,18 @@ public class Piece {
     @Override
     public String toString() {
         return "Piece{" + type.name() + " " + Width + " " + Strength + " " + Cost + "}";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Piece piece = (Piece) o;
+        return Width == piece.Width && Strength == piece.Strength && Cost == piece.Cost && type == piece.type;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, Width, Strength, Cost);
     }
 }
