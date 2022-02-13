@@ -43,7 +43,7 @@ public class NumberAllocationOperation extends DefaultOperation {
     }
 
 
-    public void generateFirstGeneration(ArrayList<Float> startingNums, NumberAllocation[] puzzles) {
+    private void generateFirstGeneration(ArrayList<Float> startingNums, NumberAllocation[] puzzles) {
         for (int i = 0; i < puzzles.length; i++) {
             NumberAllocation currPuzzle = new NumberAllocation(startingNums);
             ArrayList<Float> copyOfFirstGen = (ArrayList<Float>) startingNums.clone();
@@ -58,7 +58,7 @@ public class NumberAllocationOperation extends DefaultOperation {
         }
     }
 
-    public boolean putInBin(float currFloat, NumberAllocation currPuzzle, ArrayList<Float> copyOfFirstGen) {
+    private boolean putInBin(float currFloat, NumberAllocation currPuzzle, ArrayList<Float> copyOfFirstGen) {
         boolean returnBool = false;
         int rand = (int) (Math.floor(Math.random() * 4)) + 1;
         switch (rand) {
@@ -165,10 +165,6 @@ public class NumberAllocationOperation extends DefaultOperation {
         // Correct mutation conflicts here between children
 
         correctMutationConflict(Child1, Child2);
-//        System.out.println(numberAllocationToHashMap(Child1));
-//        System.out.println(numberAllocationToHashMap(Child2));
-        hasAllNumbers(Child1);
-        hasAllNumbers(Child2);
 
         // add to the current population array
         Puzzle[] mutationReturn = {Child1, Child2};
@@ -183,7 +179,7 @@ public class NumberAllocationOperation extends DefaultOperation {
      * @param child1 first offspring variation of mutation
      * @param child2 second offspring variation of mutation
      */
-    public void correctMutationConflict(NumberAllocation child1, NumberAllocation child2) {
+    private void correctMutationConflict(NumberAllocation child1, NumberAllocation child2) {
 
         HashMap<Float, Integer> child1Spread;
         HashMap<Float, Integer> child2Spread;
@@ -235,7 +231,7 @@ public class NumberAllocationOperation extends DefaultOperation {
      * @param child
      * @return a Hashmap with key values of float numbers and values of occurence in child
      */
-    public HashMap<Float, Integer> numberAllocationToHashMap(NumberAllocation child) {
+    private HashMap<Float, Integer> numberAllocationToHashMap(NumberAllocation child) {
         HashMap<Float, Integer> spread = new HashMap<>();
         for (int i = 0; i < 10; i++) { // populating hashmap
             if (spread.containsKey(child.getBin1().get(i))) {
@@ -262,7 +258,7 @@ public class NumberAllocationOperation extends DefaultOperation {
         return spread;
     }
 
-    public float findDuplicate(HashMap<Float, Integer> spread) {
+    private float findDuplicate(HashMap<Float, Integer> spread) {
         for (float num : numbers) {
             if (spread.containsKey(num)) {
                 if (spread.get(num) == 2) {
@@ -273,7 +269,7 @@ public class NumberAllocationOperation extends DefaultOperation {
         return (float) 11;
     }
 
-    public boolean replaceInChild(NumberAllocation child, float replace, float replaceWith) {
+    private boolean replaceInChild(NumberAllocation child, float replace, float replaceWith) {
         if (child.getBin1().contains(replace)) {
             child.getBin1().add(child.getBin1().indexOf(replace), replaceWith);
             int replacementIndexBin1 = child.getBin1().indexOf(replace);
@@ -304,17 +300,5 @@ public class NumberAllocationOperation extends DefaultOperation {
         } else return false;
     }
 
-    public void hasAllNumbers(NumberAllocation child) {
-        for (float num : numbers) {
-            if (!child.getBin1().contains(num) &&
-                    !child.getBin2().contains(num) &&
-                    !child.getBin3().contains(num) &&
-                    !child.getBin4().contains(num)) {
-                //System.out.println(child.toString() + " doesn't contain all 40 numbers with size of: " + child.getAllNum().size());
-            }
-
-        }
-        //System.out.println(child.toString() + " Contains all 40 numbers with size of: " + child.getAllNum().size());
-    }
 
 }

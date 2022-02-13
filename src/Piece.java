@@ -2,13 +2,21 @@ import java.util.Objects;
 
 public class Piece {
 
-    private PieceType type;
-    private int Width;
-    private int Strength;
-    private int Cost;
+    private PieceType type; //Type of piece
+    private int Width; //Width of piece
+    private int Strength; //Strength to have pieces placed above
+    private int Cost; //Cost to use
 
+    /**
+     * Creates a new piece with set properties
+     *
+     * @param Numtype  Type of piece (Door, Wall, Lookout)
+     * @param width    Width of piece
+     * @param strength Strength of piece
+     * @param cost     Cost of piece
+     */
     public Piece(String Numtype, int width, int strength, int cost) {
-        switch (Numtype) {
+        switch (Numtype) { //Sets the piece to the corresponding PieceType
             case "Door":
                 type = PieceType.DOOR;
                 break;
@@ -24,36 +32,32 @@ public class Piece {
         Cost = cost;
     }
 
+    /**
+     * @return Cost of piece
+     */
     public int getCost() {
         return Cost;
     }
 
+    /**
+     * @return Strength of piece
+     */
     public int getStrength() {
         return Strength;
     }
 
+    /**
+     * @return Width of piece
+     */
     public int getWidth() {
         return Width;
     }
 
+    /**
+     * @return Type of piece
+     */
     public PieceType getType() {
         return type;
-    }
-
-    public void setType(PieceType type) {
-        this.type = type;
-    }
-
-    public void setWidth(int width) {
-        Width = width;
-    }
-
-    public void setStrength(int strength) {
-        Strength = strength;
-    }
-
-    public void setCost(int cost) {
-        Cost = cost;
     }
 
     @Override

@@ -3,8 +3,12 @@ import java.util.Objects;
 
 public class TowerBuilding extends Puzzle implements Cloneable {
     private final ArrayList<Piece> pieces; //All pieces from .txt file
-    private ArrayList<Piece> tower; //Pieces in the tower
+    private ArrayList<Piece> tower; //Pieces in the current tower
 
+    /**
+     * Creates a new instance of the Tower Building puzzle
+     * @param pieces Pieces that can be used
+     */
     public TowerBuilding(ArrayList<Piece> pieces) {
         super();
         this.pieces = pieces;
@@ -13,7 +17,7 @@ public class TowerBuilding extends Puzzle implements Cloneable {
 
     @Override
     public float getScore() {
-        if(tower.size()==0)
+        if(tower.size()==0) //Makes sure tower has pieces in it to check
             return 0;
         else {
             if (tower.get(0).getType() != PieceType.DOOR || tower.get(tower.size() - 1).getType() != PieceType.LOOKOUT) //Rule 1 and 2
@@ -30,7 +34,7 @@ public class TowerBuilding extends Puzzle implements Cloneable {
                     return 0;
             }
 
-            int cost = 0;
+            int cost = 0; //Cost of tower
             for (Piece p : tower)
                 cost += p.getCost(); //Gets total cost of tower if legal
 
@@ -38,10 +42,16 @@ public class TowerBuilding extends Puzzle implements Cloneable {
         }
     }
 
+    /**
+     * @return Pieces in the current tower
+     */
     public ArrayList<Piece> getTower() {
         return tower;
     }
 
+    /**
+     * @param tower New tower to replace old one
+     */
     public void setTower(ArrayList<Piece> tower) {
         this.tower = tower;
     }
