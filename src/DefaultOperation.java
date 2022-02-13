@@ -127,8 +127,8 @@ public class DefaultOperation {
                 total += (p.getScore() + lowestScore); //Total is the sum of the actual parent score and the lowest score so all the numbers are positive
             }
         }
-        double average = total / count;
-        if(total == 0){
+        double average = total / count; //Gets average score
+        if(total == 0){ //Picks random parent if the total score is 0, which only happens if the values of all potential parents are 0
             Puzzle parent = null;
             int i = 0;
             while (parent==null) {
@@ -141,7 +141,7 @@ public class DefaultOperation {
         else
             for (int i = 0; i < next.length; i++) { //Picks parent at random
                 if (next[i] != null) {
-                    cumulative += (next[i].getScore() + lowestScore + average) / (total+ average*count); //Calculates cumulative percentage
+                    cumulative += (next[i].getScore() + lowestScore + average) / (total+ average*count); //Calculates cumulative percentage. Lowest Score and Average is added to weigh negative numbers properly
                     if (random < cumulative) { //If random is less than cumulative, then it is with in the range of the parent
                         Puzzle parent = next[i]; //Gets parent to return
                         next[i] = null; //Sets parent to null so it can't be chosen again by parent2. This is reverted after the for loop in nextGeneration()
