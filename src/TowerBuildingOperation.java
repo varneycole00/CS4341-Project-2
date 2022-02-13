@@ -32,7 +32,7 @@ public class TowerBuildingOperation extends DefaultOperation {
 
     }
 
-    @Override //TODO implement swapping values of parents
+    @Override
     public Puzzle[] mutation(Puzzle puzzle1, Puzzle puzzle2) {
         TowerBuilding nA1 = (TowerBuilding) puzzle1; //First parent
         TowerBuilding nA2 = (TowerBuilding) puzzle2; //Second parent

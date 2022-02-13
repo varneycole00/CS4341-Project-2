@@ -90,7 +90,7 @@ public class NumberAllocationOperation extends DefaultOperation {
         return returnBool;
     }
 
-    @Override //TODO implement swapping and merging values of parents
+    @Override
     public Puzzle[] mutation(Puzzle puzzle1, Puzzle puzzle2) {
         NumberAllocation nA1 = (NumberAllocation) puzzle1;
         NumberAllocation nA2 = (NumberAllocation) puzzle2;
