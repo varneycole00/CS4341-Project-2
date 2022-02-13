@@ -71,7 +71,7 @@ public class NumberAllocationOperation extends DefaultOperation {
      * helper function that randomly places a float in a bin
      * @param currFloat the float is is placing in a bin
      * @param currPuzzle the puzzle for which the float is being stored within
-     * @param copyOfFirstGen the arrylist of all the numbers from the document
+     * @param copyOfFirstGen the arraylist of all the numbers from the document
      * @return returns true if the float has been successfully placed in a bin
      */
     public boolean putInBin(float currFloat, NumberAllocation currPuzzle, ArrayList<Float> copyOfFirstGen) {
