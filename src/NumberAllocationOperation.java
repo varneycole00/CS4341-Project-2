@@ -2,25 +2,31 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-
+/**
+ * Class for the mutations and conflict resolution of the puzzle 1
+ */
 public class NumberAllocationOperation extends DefaultOperation {
+    ArrayList<Float> numbers = new ArrayList<>(); // an arraylist of all the numbers inputted
 
-    ArrayList<Float> numbers = new ArrayList<>();
-
-
+    /**
+     * constructor for this class
+     * @param nums takes in the numbers inputted from the text file
+     * @param population takes in the size of the population to generate
+     * @param time the max time that the algorithm will run
+     */
     public NumberAllocationOperation(ArrayList<Float> nums, int population, int time) {
-        super(population);
+        super(population); // set the population size in the superclass (default operation) -> we treated this like an interface
         int RESTART = 5; // Number of generations before random restart
-        NumberAllocation[] puzzles = new NumberAllocation[population];
-        this.numbers = nums;
+        NumberAllocation[] puzzles = new NumberAllocation[population]; // creates an array to store all the puzzles in the current generation
+        this.numbers = nums; // stores in the inputted arraylist of numbers in this class
 
         // create the first generation
-        generateFirstGeneration(nums, puzzles);
-        super.setPopulation(puzzles.clone());
+        generateFirstGeneration(nums, puzzles); // helper function that randomly places numbers in the four bins
+        super.setPopulation(puzzles.clone()); // sets the population in the superclass
 
         //Runs the GA algorithm for the given amount of time.
         while (getTime() < time) {
-            if(getGenerationSame() < RESTART) //Continues the algorithm if not stuck at plateau
+            if (getGenerationSame() < RESTART) //Continues the algorithm if not stuck at plateau
                 nextGeneration();
             else { //Random restart with a new set of puzzles if current iteration is stuck
                 generateFirstGeneration(nums, puzzles);
@@ -30,42 +36,52 @@ public class NumberAllocationOperation extends DefaultOperation {
         NumberAllocation bestResult = (NumberAllocation) getLargestParent(); //Gets the best parent
 
         //Prints the results of the GA
-        System.out.println("Largest Score: "+bestResult.getScore());
-        System.out.println("Generation Found: "+getGenFound());
-        System.out.println("Total Generations Searched: "+getGeneration());
+        System.out.println("Largest Score: " + bestResult.getScore());
+        System.out.println("Generation Found: " + getGenFound());
+        System.out.println("Total Generations Searched: " + getGeneration());
         System.out.println("Bins:");
-        System.out.println("Bin 1: "+bestResult.getBin1());
-        System.out.println("Bin 2: "+bestResult.getBin2());
-        System.out.println("Bin 3: "+bestResult.getBin3());
-        System.out.println("Bin 4: "+bestResult.getBin4());
+        System.out.println("Bin 1: " + bestResult.getBin1());
+        System.out.println("Bin 2: " + bestResult.getBin2());
+        System.out.println("Bin 3: " + bestResult.getBin3());
+        System.out.println("Bin 4: " + bestResult.getBin4());
 
 
     }
 
-
-    private void generateFirstGeneration(ArrayList<Float> startingNums, NumberAllocation[] puzzles) {
-        for (int i = 0; i < puzzles.length; i++) {
-            NumberAllocation currPuzzle = new NumberAllocation(startingNums);
-            ArrayList<Float> copyOfFirstGen = (ArrayList<Float>) startingNums.clone();
-            for (float j : copyOfFirstGen) {
+    /**
+     *Function for generating the first generation of the genetic algorithm
+     * @param startingNums input from the text file that contains the float values
+     * @param puzzles array to store all the puzzles we are creating
+     */
+    public void generateFirstGeneration(ArrayList<Float> startingNums, NumberAllocation[] puzzles) {
+        for (int i = 0; i < puzzles.length; i++) {  // loop for the amount of puzzles in this population
+            NumberAllocation currPuzzle = new NumberAllocation(startingNums);  // create a new instance of the puzzle
+            ArrayList<Float> copyOfFirstGen = (ArrayList<Float>) startingNums.clone();  // create a copy of the arraylist to pull values from it the copy
+            for (float j : copyOfFirstGen) {  // loop to that calls a helper function to place values in bins
                 boolean placedInBin = false;
-                while (!placedInBin) {
+                while (!placedInBin) { // a float is placed in a random bin (trys again if the random bin that it was attempted to add to was already filled with 10 floats)
                     placedInBin = putInBin(j, currPuzzle, copyOfFirstGen);
                 }
             }
-            //System.out.println("Puzzle made!");
-            puzzles[i] = currPuzzle;
+            puzzles[i] = currPuzzle; // set the puzzle with the values placed in it and store it in the array of the total population
         }
     }
 
-    private boolean putInBin(float currFloat, NumberAllocation currPuzzle, ArrayList<Float> copyOfFirstGen) {
-        boolean returnBool = false;
-        int rand = (int) (Math.floor(Math.random() * 4)) + 1;
-        switch (rand) {
+    /**
+     * helper function that randomly places a float in a bin
+     * @param currFloat the float is is placing in a bin
+     * @param currPuzzle the puzzle for which the float is being stored within
+     * @param copyOfFirstGen the arrylist of all the numbers from the document
+     * @return returns true if the float has been successfully placed in a bin
+     */
+    public boolean putInBin(float currFloat, NumberAllocation currPuzzle, ArrayList<Float> copyOfFirstGen) {
+        boolean returnBool = false; // initializes the return boolean
+        int rand = (int) (Math.floor(Math.random() * 4)) + 1; // generates a random number from 1 to 4
+        switch (rand) {  // switch case for each bin
             case 1:
-                if (currPuzzle.getBin1().size() < 10) {
-                    currPuzzle.getBin1().add(currFloat);
-                    returnBool = true;
+                if (currPuzzle.getBin1().size() < 10) {  // checks if the bin is already filled to its max of 10
+                    currPuzzle.getBin1().add(currFloat); // if not, then add the value to it
+                    returnBool = true; // set the return to true
                 }
                 break;
             case 2:
@@ -87,18 +103,26 @@ public class NumberAllocationOperation extends DefaultOperation {
                 }
                 break;
         }
-        return returnBool;
+        return returnBool; // returns the boolean, if it s false, this will rerun because of the while loop from generateFirstGeneration
     }
 
+
+    /**
+     * Mutation method for this puzzle
+     * Two types of mutation that it will do each with a chance of it occurring
+     * @param puzzle1 parent 1 first parent that the children will be based on
+     * @param puzzle2 parent 2 second parent that the children will be based on
+     * @return returns an array of 2 children which are the children of the two parents
+     */
     @Override //TODO implement swapping and merging values of parents
     public Puzzle[] mutation(Puzzle puzzle1, Puzzle puzzle2) {
-        NumberAllocation nA1 = (NumberAllocation) puzzle1;
-        NumberAllocation nA2 = (NumberAllocation) puzzle2;
-        NumberAllocation Child1 = new NumberAllocation(((NumberAllocation) puzzle1).getAllNum());
-        NumberAllocation Child2 = new NumberAllocation(((NumberAllocation) puzzle2).getAllNum());
+        NumberAllocation nA1 = (NumberAllocation) puzzle1;  // set the input of the first parent to the proper type
+        NumberAllocation nA2 = (NumberAllocation) puzzle2;  // set the input for the second parent to the proper type
+        NumberAllocation Child1 = new NumberAllocation(((NumberAllocation) puzzle1).getAllNum());  // creates an instance of child1 with empty bins
+        NumberAllocation Child2 = new NumberAllocation(((NumberAllocation) puzzle2).getAllNum());  // creates an instance of child2 with empty bins
 
         // bin1 swap
-        ArrayList<Float> Child1Bin1 = new ArrayList<>();
+        ArrayList<Float> Child1Bin1 = new ArrayList<>(); // generates all the bins for each child
         ArrayList<Float> Child2Bin1 = new ArrayList<>();
         ArrayList<Float> Child1Bin2 = new ArrayList<>();
         ArrayList<Float> Child2Bin2 = new ArrayList<>();
@@ -107,9 +131,9 @@ public class NumberAllocationOperation extends DefaultOperation {
         ArrayList<Float> Child1Bin4 = new ArrayList<>();
         ArrayList<Float> Child2Bin4 = new ArrayList<>();
 
-        double random = new Random().nextDouble(); //Random double from 0 to 1
-        if(random < 0.1){
-            Child1Bin1 = nA1.getBin2();
+        double random = new Random().nextDouble(); //Random double from 0 to 1 that will decide which type of mutation will occur
+        if (random < 0.1) {  // 10% change of this mutation to occur
+            Child1Bin1 = nA1.getBin2();  // the bins will cycle (aka the first bin1 of child1 is parent 2's bin, the second bin of child1 is parent 3's bin... etc...)
             Child1Bin2 = nA1.getBin3();
             Child1Bin3 = nA1.getBin4();
             Child1Bin4 = nA1.getBin1();
@@ -118,12 +142,11 @@ public class NumberAllocationOperation extends DefaultOperation {
             Child2Bin3 = nA2.getBin4();
             Child2Bin4 = nA2.getBin1();
 
-        }
-        else {
+        } else { // if the random double is above 10% his type of mutation will happen (90% chance)
 
-            int rand = (int) (Math.floor(Math.random() * 10)) + 1;
+            int rand = (int) (Math.floor(Math.random() * 10)) + 1; // generate a random number from 0 to 9 which is the index for swapping
             for (int i = 0; i < 10; i++) {
-                if (i < rand) {
+                if (i < rand) {  //places up to the random index from the first parent in the first child and the second parent into the second child
                     Child1Bin1.add(nA1.getBin1().get(i));
                     Child2Bin1.add(nA2.getBin1().get(i));
 
@@ -135,7 +158,7 @@ public class NumberAllocationOperation extends DefaultOperation {
 
                     Child1Bin4.add(nA1.getBin4().get(i));
                     Child2Bin4.add(nA2.getBin4().get(i));
-                } else {
+                } else {  // places the rest after the random index into the child of the opposite parent
                     Child1Bin1.add(nA2.getBin1().get(i));
                     Child2Bin1.add(nA1.getBin1().get(i));
 
@@ -150,7 +173,7 @@ public class NumberAllocationOperation extends DefaultOperation {
                 }
             }
         }
-        Child1.setBin1(Child1Bin1);
+        Child1.setBin1(Child1Bin1); // sets the bins of the child to be values in each child
         Child2.setBin1(Child2Bin1);
 
         Child1.setBin2(Child1Bin2);
@@ -162,8 +185,7 @@ public class NumberAllocationOperation extends DefaultOperation {
         Child1.setBin4(Child1Bin4);
         Child2.setBin4(Child2Bin4);
 
-        // Correct mutation conflicts here between children
-
+        // Correct mutation conflicts here between children (duplicates existing within a child's bins)
         correctMutationConflict(Child1, Child2);
 
         // add to the current population array
@@ -175,16 +197,15 @@ public class NumberAllocationOperation extends DefaultOperation {
     /**
      * Takes in two children after mutation and adjusts them to be legal, valid children that will allow the algorithm
      * to progress correctly
-     *
      * @param child1 first offspring variation of mutation
      * @param child2 second offspring variation of mutation
      */
     private void correctMutationConflict(NumberAllocation child1, NumberAllocation child2) {
 
-        HashMap<Float, Integer> child1Spread;
+        HashMap<Float, Integer> child1Spread;  // initialize 2 hashmaps
         HashMap<Float, Integer> child2Spread;
 
-        boolean conflicted = true;
+        boolean conflicted = true;  // assume there are conflicts within the bins
 
         float swapFrom1;
         float swapFrom2;
@@ -258,10 +279,15 @@ public class NumberAllocationOperation extends DefaultOperation {
         return spread;
     }
 
-    private float findDuplicate(HashMap<Float, Integer> spread) {
-        for (float num : numbers) {
-            if (spread.containsKey(num)) {
-                if (spread.get(num) == 2) {
+    /**
+     * helper function to find the duplicates in a hashmap
+     * @param spread the hashmap containing all the floats in the puzzle
+     * @return return float if there are duplicates in the hashmap
+     */
+    public float findDuplicate(HashMap<Float, Integer> spread) {
+        for (float num : numbers) { // loop through all values from the input
+            if (spread.containsKey(num)) {  // check if it is contained in the hashmap
+                if (spread.get(num) == 2) {  // if it is, check the value associated with, it, which represents how many times its found in the bins
                     return num;
                 }
             }
@@ -269,36 +295,34 @@ public class NumberAllocationOperation extends DefaultOperation {
         return (float) 11;
     }
 
-    private boolean replaceInChild(NumberAllocation child, float replace, float replaceWith) {
-        if (child.getBin1().contains(replace)) {
-            child.getBin1().add(child.getBin1().indexOf(replace), replaceWith);
-            int replacementIndexBin1 = child.getBin1().indexOf(replace);
-            child.getBin1().remove(replacementIndexBin1);
-//            System.out.println("replaced " + replace + " with " + replaceWith + " in " + child.toString());
-            return true;
+    /**
+     * helper function that makes the replacement
+     * @param child the puzzle we are replacing the values within
+     * @param replace the float we are replacing
+     * @param replaceWith the float we are replacing the value with
+     * @return returns true if it made the replacement
+     */
+    public boolean replaceInChild(NumberAllocation child, float replace, float replaceWith) {
+        if (child.getBin1().contains(replace)) { // checks which bin the value we need to replace is in
+            child.getBin1().add(child.getBin1().indexOf(replace), replaceWith);  // adds the value we want that was previously missing
+            int replacementIndexBin1 = child.getBin1().indexOf(replace); // finds the index of the duplicate value
+            child.getBin1().remove(replacementIndexBin1); // removes the duplicate value
+            return true; // sets the return type to be true alerting the code the swap was made
         } else if (child.getBin2().contains(replace)) {
             child.getBin2().add(child.getBin2().indexOf(replace), replaceWith);
             int replacementIndexBin2 = child.getBin2().indexOf(replace);
             child.getBin2().remove(replacementIndexBin2);
-//            System.out.println("replaced " + replace + " with " + replaceWith + " in " + child.toString());
-
             return true;
         } else if (child.getBin3().contains(replace)) {
             child.getBin3().add(child.getBin3().indexOf(replace), replaceWith);
             int replacementIndexBin3 = child.getBin3().indexOf(replace);
             child.getBin3().remove(replacementIndexBin3);
-//            System.out.println("replaced " + replace + " with " + replaceWith + " in " + child.toString());
-
             return true;
         } else if (child.getBin4().contains(replace)) {
             child.getBin4().add(child.getBin4().indexOf(replace), replaceWith);
             int replacementIndexBin4 = child.getBin4().indexOf(replace);
             child.getBin4().remove(replacementIndexBin4);
-//            System.out.println("replaced " + replace + " with " + replaceWith + " in " + child.toString());
-
             return true;
         } else return false;
     }
-
-
 }

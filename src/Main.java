@@ -18,40 +18,47 @@ public class Main {
             System.out.println("Please input a puzzle number, filename, and a time-limit to solve the puzzle ");
         }
 
-        // reads the first command line arg as the puzzle number
+        // reads the first command line arg as the puzzle number as a string
         String initialInt = args[0];
 
-        try {
+        try { // attempts to convert it to integer, otherwise catch the error and exit
             currPuzzle = Integer.parseInt(initialInt);
         } catch (NumberFormatException e) {
             System.out.println("Please input the puzzle number as the first input.");
             return;
         }
 
+        // generates the one of each type of board, using random generated numbers
         GenerateBoards currBoard;
-        String puzzleFile = args[1];
-        int time = Integer.parseInt(args[2]);
+        String puzzleFile = args[1]; // gets the filepath for the puzzle we will solve from command line
+        String timeString = args[2];
+        int time;
+        try { // gets the runtime from the commandline and attempts to convert it from a string to int, if unsuccessful, return
+            time = Integer.parseInt(args[2]);
+        } catch (NumberFormatException e) {
+            System.out.println("Please input the runtime as the third input.");
+            return;
+        }
 
-        try {
+        try {   //generates the input depending on which puzzle we would like to solve (1 or 2)
             currBoard = new GenerateBoards(currPuzzle); //TODO for quick testing but change before submission
-        } catch (IOException e) {
+        } catch (IOException e) { // catches exception if not completed
             e.printStackTrace();
         }
 
 
-        switch (currPuzzle) {
-            case 1:
+        switch (currPuzzle) {  // depending on which puzzle we will solve, we call a different algorithm under the same interface
+            case 1:  // if first puzzle, we denote where the input will come from
                 puzzleFile = "src/boards/number_allocation.txt"; //TODO for quick testing but change before submission
-                ParseInput parseOne = new ParseInput(currPuzzle, puzzleFile);
-                new NumberAllocationOperation((ArrayList<Float>) parseOne.getArrayList(), 10, time);
+                ParseInput parseOne = new ParseInput(currPuzzle, puzzleFile); // we parse the input and place it into respective classes and objects
+                new NumberAllocationOperation((ArrayList<Float>) parseOne.getArrayList(), 10, time); // we run the algorithm depending on population size and time
                 break;
-            case 2:
+            case 2:  // if second puzzle, we denote where the input will come from
                 puzzleFile = "src/boards/tower_building.txt"; //TODO for quick testing but change before submission
-                ParseInput parseTwo = new ParseInput(currPuzzle, puzzleFile);
-                new TowerBuildingOperation((ArrayList<Piece>) parseTwo.getArrayList(), 10, time);
-                //System.out.println(parseTwo.getArrayList());
+                ParseInput parseTwo = new ParseInput(currPuzzle, puzzleFile); // we parse through the input
+                new TowerBuildingOperation((ArrayList<Piece>) parseTwo.getArrayList(), 100, time); // we run the algorithm for the population size and time
                 break;
-            default:
+            default: // if the puzzle input is wrong, we will catch it here as well
                 System.out.println("Please input a correct puzzle number, either 1 or 2");
                 break;
         }
