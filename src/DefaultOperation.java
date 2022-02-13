@@ -73,7 +73,7 @@ public class DefaultOperation {
             Puzzle[] parents = population.clone(); //Gets a clone of the current, culled population
             parent1 = chooseParent(parents); //Chooses parent1 by weighted random
             parent2 = chooseParent(parents); //Chooses parent2 by weighted random
-           // System.out.println("Parents Chosen");
+            // System.out.println("Parents Chosen");
             Puzzle[] children = mutation(parent1, parent2); //Gets the mutated children of the parents
             //System.out.println("Mutation Complete");
             next[i] = children[0]; //Adds the first child
@@ -139,16 +139,16 @@ public class DefaultOperation {
             return parent;
         }
         else
-        for (int i = 0; i < next.length; i++) { //Picks parent at random
-            if (next[i] != null) {
-                cumulative += (next[i].getScore() + lowestScore + average) / (total+ average*count); //Calculates cumulative percentage
-                if (random < cumulative) { //If random is less than cumulative, then it is with in the range of the parent
-                    Puzzle parent = next[i]; //Gets parent to return
-                    next[i] = null; //Sets parent to null so it can't be chosen again by parent2. This is reverted after the for loop in nextGeneration()
-                    return parent;
+            for (int i = 0; i < next.length; i++) { //Picks parent at random
+                if (next[i] != null) {
+                    cumulative += (next[i].getScore() + lowestScore + average) / (total+ average*count); //Calculates cumulative percentage
+                    if (random < cumulative) { //If random is less than cumulative, then it is with in the range of the parent
+                        Puzzle parent = next[i]; //Gets parent to return
+                        next[i] = null; //Sets parent to null so it can't be chosen again by parent2. This is reverted after the for loop in nextGeneration()
+                        return parent;
+                    }
                 }
             }
-        }
 
         return null; //Default case
     }

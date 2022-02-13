@@ -31,14 +31,14 @@ public class Main {
         GenerateBoards currBoard;
         String puzzleFile = args[1];
         int time = Integer.parseInt(args[2]);
-        /*
+
         try {
             currBoard = new GenerateBoards(currPuzzle); //TODO for quick testing but change before submission
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-         */
+
         switch (currPuzzle) {
             case 1:
                 puzzleFile = "src/boards/number_allocation.txt"; //TODO for quick testing but change before submission
