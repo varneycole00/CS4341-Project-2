@@ -114,7 +114,7 @@ public class NumberAllocationOperation extends DefaultOperation {
      * @param puzzle2 parent 2 second parent that the children will be based on
      * @return returns an array of 2 children which are the children of the two parents
      */
-    @Override //TODO implement swapping and merging values of parents
+    @Override
     public Puzzle[] mutation(Puzzle puzzle1, Puzzle puzzle2) {
         NumberAllocation nA1 = (NumberAllocation) puzzle1;  // set the input of the first parent to the proper type
         NumberAllocation nA2 = (NumberAllocation) puzzle2;  // set the input for the second parent to the proper type
