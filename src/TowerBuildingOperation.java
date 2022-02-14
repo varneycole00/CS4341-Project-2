@@ -130,7 +130,7 @@ public class TowerBuildingOperation extends DefaultOperation {
         for(int i = 0; i< puzzles.length; i++){
             ArrayList<Piece> temp = (ArrayList<Piece>) pieces.clone();
             TowerBuilding tower = new TowerBuilding(pieces);
-            int numPieces = r.nextInt(10)+1;
+            int numPieces = r.nextInt(pieces.size())+1;
             for(int j = 0; j < numPieces; j++){
                 tower.getTower().add(temp.remove(r.nextInt(temp.size())));
             }
