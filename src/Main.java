@@ -1,3 +1,4 @@
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -8,7 +9,7 @@ public class Main {
      * @param args The first command line arg should be which puzzle type (1 or 2), the second should be the file path,
      *             and the third should be the amount of seconds to have the algorithm run before giving an answer
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         int currPuzzle;
 
         // checks if the input is correct and specifies what needs to be changed
@@ -41,7 +42,7 @@ public class Main {
         }
 
         try {   //generates the input depending on which puzzle we would like to solve (1 or 2)
-            currBoard = new GenerateBoards(currPuzzle); //TODO for quick testing but change before submission
+            currBoard = new GenerateBoards(currPuzzle);
         } catch (IOException e) { // catches exception if not completed
             e.printStackTrace();
         }
@@ -49,12 +50,10 @@ public class Main {
 
         switch (currPuzzle) {  // depending on which puzzle we will solve, we call a different algorithm under the same interface
             case 1:  // if first puzzle, we denote where the input will come from
-                puzzleFile = "src/boards/number_allocation.txt"; //TODO for quick testing but change before submission
                 ParseInput parseOne = new ParseInput(currPuzzle, puzzleFile); // we parse the input and place it into respective classes and objects
                 new NumberAllocationOperation((ArrayList<Float>) parseOne.getArrayList(), 10, time); // we run the algorithm depending on population size and time
                 break;
             case 2:  // if second puzzle, we denote where the input will come from
-                puzzleFile = "src/boards/tower_building.txt"; //TODO for quick testing but change before submission
                 ParseInput parseTwo = new ParseInput(currPuzzle, puzzleFile); // we parse through the input
                 new TowerBuildingOperation((ArrayList<Piece>) parseTwo.getArrayList(), 100, time); // we run the algorithm for the population size and time
                 break;

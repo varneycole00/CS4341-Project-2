@@ -1,18 +1,40 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class TowerBuildingOperation extends DefaultOperation {
     private ArrayList<Piece> pieces;
 
-    public TowerBuildingOperation(ArrayList<Piece> pieces, int population, int time) {
+    public TowerBuildingOperation(ArrayList<Piece> pieces, int population, int time) throws FileNotFoundException {
         super(population);
         this.pieces = pieces;
         int RESTART = 10000; // Number of generations before random restart
         TowerBuilding[] puzzles = new TowerBuilding[population];
         generateFirstGeneration(pieces, puzzles); //Creates first generation
         super.setPopulation(puzzles);
-
+        File boards = new File("src/test"); // generating a new file
+        boards.mkdir();
+        PrintWriter writer = new PrintWriter("src/test/test5.csv");
+        StringBuilder sb = new StringBuilder();
+        sb.append("Generation");
+        sb.append(',');
+        sb.append("Highest");
+        sb.append('\n');
         while (getTime() < time) { //Makes sure algorithm is running for correct number of seconds
+            if(getGeneration()%100==0){
+                float highest;
+                if(getLargestParent()!=null)
+                highest = getLargestParent().getScore();
+                else highest = 0;
+                sb.append(getGeneration());
+                sb.append(',');
+                sb.append(highest);
+                sb.append('\n');
+            }
+
             if(getGenerationSame() < RESTART) //Continues the algorithm if not stuck at plateau
                 nextGeneration();
             else { //Random restart with a new set of puzzles if current iteration is stuck
@@ -20,7 +42,8 @@ public class TowerBuildingOperation extends DefaultOperation {
                 randomRestart(puzzles.clone());
             }
         }
-
+        writer.write(sb.toString());
+        writer.close();
         TowerBuilding bestResult = (TowerBuilding) getLargestParent(); //Gets the best parent
 
         //Prints the results of the GA

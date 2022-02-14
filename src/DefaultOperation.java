@@ -30,7 +30,7 @@ public class DefaultOperation {
      * Creates the next generation of puzzles
      */
     public void nextGeneration() {
-        int PERCENTAGE = 20; //Percentage of current population to bring over
+        int PERCENTAGE = 0; //Percentage of current population to bring over
         Puzzle parent1, parent2; //Parents to make children for mutations
         Puzzle[] next = new Puzzle[population.length]; //Next generation
         Arrays.sort(population); //Sorts current generation from least to greatest score
