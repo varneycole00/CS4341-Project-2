@@ -31,7 +31,7 @@ public class Main {
         // generates the one of each type of board, using random generated numbers
 
         String puzzleFile = args[1]; // gets the filepath for the puzzle we will solve from command line
-        String timeString = args[2];
+        String timeString = args[2]; //Gets number of seconds to run the file
         int time;
         try { // gets the runtime from the commandline and attempts to convert it from a string to int, if unsuccessful, return
             time = Integer.parseInt(args[2]);
