@@ -8,7 +8,7 @@ public class Main {
      * @param args The first command line arg should be which puzzle type (1 or 2), the second should be the file path,
      *             and the third should be the amount of seconds to have the algorithm run before giving an answer
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         int currPuzzle;
 
         // checks if the input is correct and specifies what needs to be changed
@@ -34,17 +34,15 @@ public class Main {
         String timeString = args[2]; //Gets number of seconds to run the file
         int time;
         try { // gets the runtime from the commandline and attempts to convert it from a string to int, if unsuccessful, return
-            time = Integer.parseInt(args[2]);
+            time = Integer.parseInt(timeString);
         } catch (NumberFormatException e) {
             System.out.println("Please input the runtime as the third input.");
             return;
         }
 
-        try {   //generates the input depending on which puzzle we would like to solve (1 or 2)
-            GenerateBoards currBoard = new GenerateBoards(currPuzzle);
-        } catch (IOException e) { // catches exception if not completed
-            e.printStackTrace();
-        }
+        /*Comment out this line of code to prevent generating a random board*/
+        GenerateBoards currBoard = new GenerateBoards(currPuzzle); //generates the input depending on which puzzle we would like to solve (1 or 2)
+
 
 
         switch (currPuzzle) {  // depending on which puzzle we will solve, we call a different algorithm under the same interface
